@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Models\Service;
 use App\Models\User;
+use App\Mail\AppointmentConfirmation;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
@@ -15,7 +17,26 @@ class AppointmentController extends Controller
     public function index()
     {
         $appointments = Appointment::with(['patient', 'service', 'doctor'])->latest()->paginate(10);
-        return view('appointments.index', compact('appointments'));
+        
+        // For dynamic search (AJAX)
+        if (request()->ajax()) {
+            $query = Appointment::with(['patient', 'service', 'doctor']);
+            if (request('search')) {
+                $search = request('search');
+                $query->whereHas('patient', function($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                })->orWhereHas('service', function($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%");
+                });
+            }
+            return response()->json($query->get());
+        }
+
+        $patients = User::where('role', 'patient')->get();
+        $doctors = User::where('role', 'doctor')->get();
+        $services = Service::all();
+
+        return view('appointments.index', compact('appointments', 'patients', 'doctors', 'services'));
     }
 
     /**
@@ -42,7 +63,18 @@ class AppointmentController extends Controller
             'notes' => 'nullable|string',
         ]);
 
-        Appointment::create($validated + ['status' => 'scheduled']);
+        $appointment = Appointment::create($validated + ['status' => 'scheduled']);
+
+        // Send email to patient
+        try {
+            Mail::to($appointment->patient->email)->send(new AppointmentConfirmation($appointment));
+        } catch (\Exception $e) {
+            // Log error or ignore for now
+        }
+
+        if ($request->ajax()) {
+            return response()->json(['message' => 'Appointment created successfully', 'appointment' => $appointment]);
+        }
 
         return redirect()->route('appointments.index')->with('success', 'Appointment created successfully.');
     }
