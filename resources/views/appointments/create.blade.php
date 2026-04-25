@@ -1,0 +1,75 @@
+<x-app-layout>
+    <x-slot name="header">
+        إضافة موعد جديد
+    </x-slot>
+
+    <div class="max-w-2xl mx-auto bg-white p-8 shadow-sm sm:rounded-lg">
+        <form action="{{ route('appointments.store') }}" method="POST">
+            @csrf
+            
+            <div class="grid grid-cols-1 gap-6">
+                <!-- Patient -->
+                <div>
+                    <label for="patient_id" class="block text-sm font-medium text-gray-700">المريض</label>
+                    <select name="patient_id" id="patient_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">اختر مريضاً</option>
+                        @foreach($patients as $patient)
+                            <option value="{{ $patient->id }}" {{ old('patient_id') == $patient->id ? 'selected' : '' }}>
+                                {{ $patient->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('patient_id') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <!-- Service -->
+                <div>
+                    <label for="service_id" class="block text-sm font-medium text-gray-700">الخدمة</label>
+                    <select name="service_id" id="service_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">اختر خدمة</option>
+                        @foreach($services as $service)
+                            <option value="{{ $service->id }}" {{ old('service_id') == $service->id ? 'selected' : '' }}>
+                                {{ $service->name }} ({{ $service->duration_minutes }} دقيقة)
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('service_id') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <!-- Doctor -->
+                <div>
+                    <label for="doctor_id" class="block text-sm font-medium text-gray-700">الطبيب</label>
+                    <select name="doctor_id" id="doctor_id" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                        <option value="">اختر طبيباً</option>
+                        @foreach($doctors as $doctor)
+                            <option value="{{ $doctor->id }}" {{ old('doctor_id') == $doctor->id ? 'selected' : '' }}>
+                                {{ $doctor->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    @error('doctor_id') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <!-- Date and Time -->
+                <div>
+                    <label for="appointment_time" class="block text-sm font-medium text-gray-700">تاريخ ووقت الموعد</label>
+                    <input type="datetime-local" name="appointment_time" id="appointment_time" value="{{ old('appointment_time') }}"
+                           class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
+                    @error('appointment_time') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <!-- Notes -->
+                <div>
+                    <label for="notes" class="block text-sm font-medium text-gray-700">ملاحظات إضافية</label>
+                    <textarea name="notes" id="notes" rows="3" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">{{ old('notes') }}</textarea>
+                    @error('notes') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                </div>
+
+                <div class="flex justify-end space-x-3 space-x-reverse">
+                    <a href="{{ route('appointments.index') }}" class="bg-gray-100 hover:bg-gray-200 text-gray-800 px-4 py-2 rounded-md transition">إلغاء</a>
+                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow-sm transition">حفظ الموعد</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</x-app-layout>
