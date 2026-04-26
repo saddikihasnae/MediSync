@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
         // 10 Patients
         User::factory(10)->create(['role' => 'patient']);
 
-        // 4 Services
+        // 6 Services
         Service::factory(6)->create();
 
         // 20 Appointments

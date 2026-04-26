@@ -12,7 +12,8 @@ class ServiceController extends Controller
      */
     public function index()
     {
-        $services = Service::all();
+        abort_if(auth()->user()->role !== 'doctor', 403, 'Forbidden');
+        $services = Service::latest()->get();
         return view('services.index', compact('services'));
     }
 
@@ -21,6 +22,7 @@ class ServiceController extends Controller
      */
     public function store(Request $request)
     {
+        abort_if(auth()->user()->role !== 'doctor', 403);
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -30,7 +32,7 @@ class ServiceController extends Controller
 
         Service::create($validated);
 
-        return redirect()->route('services.index')->with('success', 'Service créé avec succès.');
+        return redirect()->route('services.index')->with('success', __('messages.service_created') ?? 'Service created successfully.');
     }
 
     /**
@@ -38,6 +40,7 @@ class ServiceController extends Controller
      */
     public function update(Request $request, Service $service)
     {
+        abort_if(auth()->user()->role !== 'doctor', 403);
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'description' => 'nullable|string',
@@ -47,7 +50,7 @@ class ServiceController extends Controller
 
         $service->update($validated);
 
-        return redirect()->route('services.index')->with('success', 'Service mis à jour avec succès.');
+        return redirect()->route('services.index')->with('success', __('messages.service_updated') ?? 'Service updated successfully.');
     }
 
     /**
@@ -55,7 +58,8 @@ class ServiceController extends Controller
      */
     public function destroy(Service $service)
     {
+        abort_if(auth()->user()->role !== 'doctor', 403);
         $service->delete();
-        return redirect()->route('services.index')->with('success', 'Service supprimé avec succès.');
+        return redirect()->route('services.index')->with('success', __('messages.service_deleted') ?? 'Service deleted successfully.');
     }
 }
