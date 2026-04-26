@@ -4,6 +4,8 @@ return [
     // General
     'dashboard' => 'لوحة التحكم',
     'appointments' => 'المواعيد',
+    'my_appointments' => 'مواعيدي',
+    'book_appointment' => 'حجز موعد جديد',
     'all_appointments' => 'جميع المواعيد',
     'past_appointments' => 'المواعيد السابقة',
     'new_appointment' => 'موعد جديد',

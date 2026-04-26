@@ -34,6 +34,11 @@ Route::middleware('auth')->group(function () {
     Route::resource('services', \App\Http\Controllers\ServiceController::class);
     Route::resource('patients', \App\Http\Controllers\PatientController::class);
     Route::get('/patients-search', [\App\Http\Controllers\PatientController::class, 'search'])->name('patients.search');
+    
+    // Patient Booking Routes
+    Route::get('/book-appointment', [\App\Http\Controllers\PatientAppointmentController::class, 'create'])->name('patient.book');
+    Route::post('/book-appointment', [\App\Http\Controllers\PatientAppointmentController::class, 'store'])->name('patient.book.store');
+
     Route::post('/dashboard/complete-diagnosis/{appointment}', [DashboardController::class, 'completeDiagnosis'])->name('dashboard.complete-diagnosis');
 });
 

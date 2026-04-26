@@ -41,18 +41,18 @@
                 </a>
             @elseif(auth()->user()->role === 'patient')
                 <!-- Patient Links -->
-                <a href="{{ route('appointments.index') }}" class="group flex items-center px-5 py-4 text-sm font-bold rounded-2xl transition-all duration-200 {{ request()->routeIs('appointments.*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-400 hover:bg-slate-50 hover:text-indigo-600' }}">
-                    <svg class="ms-3 h-5 w-5 {{ request()->routeIs('appointments.*') ? 'text-indigo-500' : 'text-slate-300 group-hover:text-indigo-500' }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <a href="{{ route('dashboard') }}" class="group flex items-center px-5 py-4 text-sm font-bold rounded-2xl transition-all duration-200 {{ request()->routeIs('dashboard') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-400 hover:bg-slate-50 hover:text-indigo-600' }}">
+                    <svg class="ms-3 h-5 w-5 {{ request()->routeIs('dashboard') ? 'text-indigo-500' : 'text-slate-300 group-hover:text-indigo-500' }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                     {{ __('messages.my_appointments') ?? 'My Appointments' }}
                 </a>
                 
-                <a href="#" class="group flex items-center px-5 py-4 text-sm font-bold rounded-2xl transition-all duration-200 text-slate-400 hover:bg-slate-50 hover:text-indigo-600">
-                    <svg class="ms-3 h-5 w-5 text-slate-300 group-hover:text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m0 11v1m5-10v1m0 10v1m-10-10v1m0 10v1M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                <a href="{{ route('patient.book') }}" class="group flex items-center px-5 py-4 text-sm font-bold rounded-2xl transition-all duration-200 {{ request()->routeIs('patient.book') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-400 hover:bg-slate-50 hover:text-indigo-600' }}">
+                    <svg class="ms-3 h-5 w-5 {{ request()->routeIs('patient.book') ? 'text-indigo-500' : 'text-slate-300 group-hover:text-indigo-500' }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v1m0 11v1m5-10v1m0 10v1M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    {{ __('messages.book_appointment') ?? 'Book Now' }}
+                    {{ __('messages.book_appointment') }}
                 </a>
             @endif
 

@@ -4,6 +4,8 @@ return [
     // General
     'dashboard' => 'Tableau de bord',
     'appointments' => 'Rendez-vous',
+    'my_appointments' => 'Mes Rendez-vous',
+    'book_appointment' => 'Prendre RDV',
     'all_appointments' => 'Tous les rendez-vous',
     'past_appointments' => 'Rendez-vous passés',
     'new_appointment' => 'Nouveau rendez-vous',
