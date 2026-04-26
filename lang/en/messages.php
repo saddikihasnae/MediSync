@@ -1,8 +1,12 @@
 <?php
 
 return [
+    // General
     'dashboard' => 'Dashboard',
     'appointments' => 'Appointments',
+    'all_appointments' => 'All Appointments',
+    'past_appointments' => 'Past Appointments',
+    'new_appointment' => 'New Appointment',
     'services' => 'Services',
     'patients' => 'Patients',
     'settings' => 'Settings',
@@ -16,4 +20,26 @@ return [
     'this_week' => 'this week',
     'welcome_back' => 'Welcome back, Dr.',
     'search' => 'Search...',
+    'search_patient' => 'Search by patient...',
+    'appointment_created' => 'Appointment created successfully.',
+    'appointment_updated' => 'Appointment updated successfully.',
+    'appointment_deleted' => 'Appointment deleted successfully.',
+    'confirm_delete_msg' => 'Are you sure you want to cancel this appointment?',
+    'cancel' => 'Cancel',
+    'delete' => 'Delete',
+    'save' => 'Save',
+    'edit' => 'Edit',
+    'patient' => 'Patient',
+    'service' => 'Service',
+    'date_time' => 'Date & Time',
+    'status' => 'Status',
+    
+    // Days
+    'monday' => 'Monday',
+    'tuesday' => 'Tuesday',
+    'wednesday' => 'Wednesday',
+    'thursday' => 'Thursday',
+    'friday' => 'Friday',
+    'saturday' => 'Saturday',
+    'sunday' => 'Sunday',
 ];

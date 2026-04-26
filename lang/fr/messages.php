@@ -1,8 +1,12 @@
 <?php
 
 return [
+    // General
     'dashboard' => 'Tableau de bord',
     'appointments' => 'Rendez-vous',
+    'all_appointments' => 'Tous les rendez-vous',
+    'past_appointments' => 'Rendez-vous passés',
+    'new_appointment' => 'Nouveau rendez-vous',
     'services' => 'Services',
     'patients' => 'Patients',
     'settings' => 'Paramètres',
@@ -16,4 +20,26 @@ return [
     'this_week' => 'cette semaine',
     'welcome_back' => 'Bon retour, Dr.',
     'search' => 'Rechercher...',
+    'search_patient' => 'Rechercher par patient...',
+    'appointment_created' => 'Rendez-vous créé avec succès.',
+    'appointment_updated' => 'Rendez-vous mis à jour avec succès.',
+    'appointment_deleted' => 'Rendez-vous supprimé avec succès.',
+    'confirm_delete_msg' => 'Êtes-vous sûr de vouloir annuler ce rendez-vous ?',
+    'cancel' => 'Annuler',
+    'delete' => 'Supprimer',
+    'save' => 'Enregistrer',
+    'edit' => 'Modifier',
+    'patient' => 'Patient',
+    'service' => 'Service',
+    'date_time' => 'Date et Heure',
+    'status' => 'Statut',
+
+    // Days
+    'monday' => 'Lundi',
+    'tuesday' => 'Mardi',
+    'wednesday' => 'Mercredi',
+    'thursday' => 'Jeudi',
+    'friday' => 'Vendredi',
+    'saturday' => 'Samedi',
+    'sunday' => 'Dimanche',
 ];

@@ -2,11 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\Service;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends Factory<Service>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Service>
  */
 class ServiceFactory extends Factory
 {
@@ -18,10 +17,10 @@ class ServiceFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->randomElement(['General Consultation', 'Dental Checkup', 'Blood Test', 'X-Ray', 'Physiotherapy']),
+            'name' => fake()->randomElement(['General Consultation', 'Dental Checkup', 'Cardiology', 'Pediatrics', 'Radiology', 'Surgery']),
+            'price' => fake()->numberBetween(50, 500),
+            'duration_minutes' => fake()->randomElement([30, 45, 60]),
             'description' => fake()->sentence(),
-            'duration_minutes' => fake()->randomElement([15, 30, 45, 60]),
-            'price' => fake()->randomFloat(2, 20, 200),
         ];
     }
 }

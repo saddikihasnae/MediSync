@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('appointments', AppointmentController::class);
+    Route::get('/appointments-search', [AppointmentController::class, 'search'])->name('appointments.search');
     Route::resource('services', \App\Http\Controllers\ServiceController::class);
     Route::post('/dashboard/complete-diagnosis/{appointment}', [DashboardController::class, 'completeDiagnosis'])->name('dashboard.complete-diagnosis');
 });

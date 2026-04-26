@@ -1,8 +1,12 @@
 <?php
 
 return [
+    // General
     'dashboard' => 'لوحة التحكم',
     'appointments' => 'المواعيد',
+    'all_appointments' => 'جميع المواعيد',
+    'past_appointments' => 'المواعيد السابقة',
+    'new_appointment' => 'موعد جديد',
     'services' => 'الخدمات',
     'patients' => 'المرضى',
     'settings' => 'الإعدادات',
@@ -16,4 +20,26 @@ return [
     'this_week' => 'هذا الأسبوع',
     'welcome_back' => 'مرحباً بعودتك، د.',
     'search' => 'بحث...',
+    'search_patient' => 'ابحث باسم المريض...',
+    'appointment_created' => 'تم إنشاء الموعد بنجاح.',
+    'appointment_updated' => 'تم تحديث الموعد بنجاح.',
+    'appointment_deleted' => 'تم حذف الموعد بنجاح.',
+    'confirm_delete_msg' => 'هل أنت متأكد من إلغاء هذا الموعد؟',
+    'cancel' => 'إلغاء',
+    'delete' => 'حذف',
+    'save' => 'حفظ',
+    'edit' => 'تعديل',
+    'patient' => 'المريض',
+    'service' => 'الخدمة',
+    'date_time' => 'التاريخ والوقت',
+    'status' => 'الحالة',
+
+    // Days
+    'monday' => 'الاثنين',
+    'tuesday' => 'الثلاثاء',
+    'wednesday' => 'الأربعاء',
+    'thursday' => 'الخميس',
+    'friday' => 'الجمعة',
+    'saturday' => 'السبت',
+    'sunday' => 'الأحد',
 ];
