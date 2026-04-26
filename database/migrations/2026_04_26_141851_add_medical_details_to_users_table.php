@@ -12,7 +12,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->string('gender')->nullable()->after('age');
+            $table->string('blood_group')->nullable()->after('gender');
+            $table->text('medical_note')->nullable()->after('blood_group');
+            $table->string('status')->default('Stable')->after('medical_note'); // Stable, Under Treatment, Recovered
         });
     }
 
@@ -22,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            //
+            $table->dropColumn(['gender', 'blood_group', 'medical_note', 'status']);
         });
     }
 };

@@ -33,8 +33,8 @@
                     {{ __('messages.services') }}
                 </a>
 
-                <a href="#" class="group flex items-center px-5 py-4 text-sm font-bold rounded-2xl transition-all duration-200 text-slate-400 hover:bg-slate-50 hover:text-indigo-600">
-                    <svg class="ms-3 h-5 w-5 text-slate-300 group-hover:text-indigo-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <a href="{{ route('patients.index') }}" class="group flex items-center px-5 py-4 text-sm font-bold rounded-2xl transition-all duration-200 {{ request()->routeIs('patients.*') ? 'bg-indigo-50 text-indigo-600' : 'text-slate-400 hover:bg-slate-50 hover:text-indigo-600' }}">
+                    <svg class="ms-3 h-5 w-5 {{ request()->routeIs('patients.*') ? 'text-indigo-500' : 'text-slate-300 group-hover:text-indigo-500' }}" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                     </svg>
                     {{ __('messages.patients') }}

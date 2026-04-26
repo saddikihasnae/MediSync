@@ -6,17 +6,14 @@
     </div>
 
     <div class="hidden lg:block">
-        <h2 class="text-sm font-black text-slate-400 uppercase tracking-widest">{{ __('messages.dashboard') }}</h2>
+        <h2 class="text-sm font-black text-slate-800 uppercase tracking-widest flex items-center gap-2">
+            <span class="text-slate-400">Pages</span>
+            <span class="text-slate-200">/</span>
+            <span>@yield('title', 'Overview')</span>
+        </h2>
     </div>
 
     <div class="flex items-center gap-6">
-        <!-- Language Switcher -->
-        <div class="flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200">
-            <a href="{{ route('lang.switch', 'ar') }}" class="px-4 py-1.5 text-[10px] font-black rounded-xl transition-all {{ app()->getLocale() == 'ar' ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-400 hover:text-slate-600' }}">AR</a>
-            <a href="{{ route('lang.switch', 'fr') }}" class="px-4 py-1.5 text-[10px] font-black rounded-xl transition-all {{ app()->getLocale() == 'fr' ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-400 hover:text-slate-600' }}">FR</a>
-            <a href="{{ route('lang.switch', 'en') }}" class="px-4 py-1.5 text-[10px] font-black rounded-xl transition-all {{ app()->getLocale() == 'en' ? 'bg-white text-emerald-600 shadow-sm' : 'text-slate-400 hover:text-slate-600' }}">EN</a>
-        </div>
-
         <div class="h-8 w-px bg-slate-100 hidden sm:block"></div>
 
         <!-- User Dropdown -->
@@ -24,10 +21,10 @@
             <x-slot name="trigger">
                 <button class="flex items-center gap-4 group focus:outline-none">
                     <div class="text-end hidden sm:block">
-                        <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">Clinic Admin</p>
-                        <p class="text-sm font-black text-slate-800 group-hover:text-emerald-600 transition-colors">{{ Auth::user()->name }}</p>
+                        <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">{{ Auth::user()->role === 'doctor' ? 'Clinic Admin' : 'Patient' }}</p>
+                        <p class="text-sm font-black text-slate-800 group-hover:text-indigo-600 transition-colors">{{ Auth::user()->name }}</p>
                     </div>
-                    <div class="w-10 h-10 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 font-black shadow-sm group-hover:scale-105 transition-all">
+                    <div class="w-10 h-10 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 font-black shadow-sm group-hover:scale-105 transition-all">
                         {{ substr(Auth::user()->name, 0, 1) }}
                     </div>
                 </button>

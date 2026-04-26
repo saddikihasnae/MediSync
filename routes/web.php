@@ -32,6 +32,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('appointments', AppointmentController::class);
     Route::get('/appointments-search', [AppointmentController::class, 'search'])->name('appointments.search');
     Route::resource('services', \App\Http\Controllers\ServiceController::class);
+    Route::resource('patients', \App\Http\Controllers\PatientController::class);
+    Route::get('/patients-search', [\App\Http\Controllers\PatientController::class, 'search'])->name('patients.search');
     Route::post('/dashboard/complete-diagnosis/{appointment}', [DashboardController::class, 'completeDiagnosis'])->name('dashboard.complete-diagnosis');
 });
 
