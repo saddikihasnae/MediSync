@@ -18,7 +18,9 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();
-            $table->string('role')->default('patient')->comment('patient, doctor'); // patient, doctor
+            $table->string('role')->default('patient'); // doctor, patient
+            $table->string('phone')->nullable();
+            $table->integer('age')->nullable();
             $table->timestamps();
         });
 

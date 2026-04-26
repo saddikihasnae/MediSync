@@ -14,40 +14,30 @@ class AppointmentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $appointments = Appointment::with(['patient', 'service', 'doctor'])->latest()->paginate(10);
-        
-        // For dynamic search (AJAX)
-        if (request()->ajax()) {
-            $query = Appointment::with(['patient', 'service', 'doctor']);
-            if (request('search')) {
-                $search = request('search');
-                $query->whereHas('patient', function($q) use ($search) {
-                    $q->where('name', 'like', "%{$search}%");
-                })->orWhereHas('service', function($q) use ($search) {
-                    $q->where('name', 'like', "%{$search}%");
+        $query = Appointment::with(['patient', 'service', 'doctor'])->latest();
+
+        // Live Search (Axios)
+        if ($request->ajax()) {
+            if ($request->search) {
+                $search = $request->search;
+                $query->where(function($q) use ($search) {
+                    $q->whereHas('patient', function($pq) use ($search) {
+                        $pq->where('name', 'like', "%{$search}%");
+                    })
+                    ->orWhere('status', 'like', "%{$search}%");
                 });
             }
             return response()->json($query->get());
         }
 
+        $appointments = $query->paginate(10);
         $patients = User::where('role', 'patient')->get();
         $doctors = User::where('role', 'doctor')->get();
         $services = Service::all();
 
         return view('appointments.index', compact('appointments', 'patients', 'doctors', 'services'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        $patients = User::where('role', 'patient')->get();
-        $doctors = User::where('role', 'doctor')->get();
-        $services = Service::all();
-        return view('appointments.create', compact('patients', 'doctors', 'services'));
     }
 
     /**
@@ -59,35 +49,23 @@ class AppointmentController extends Controller
             'patient_id' => 'required|exists:users,id',
             'doctor_id' => 'required|exists:users,id',
             'service_id' => 'required|exists:services,id',
-            'appointment_time' => 'required|date|after:now',
+            'appointment_date' => 'required|date|after:now',
+            'status' => 'required|in:pending,confirmed,completed,cancelled',
             'notes' => 'nullable|string',
         ]);
 
-        $appointment = Appointment::create($validated + ['status' => 'scheduled']);
+        $appointment = Appointment::create($validated);
 
-        // Send email to patient
-        try {
-            Mail::to($appointment->patient->email)->send(new AppointmentConfirmation($appointment));
-        } catch (\Exception $e) {
-            // Log error or ignore for now
+        // Send Email if confirmed
+        if ($appointment->status === 'confirmed') {
+            try {
+                Mail::to($appointment->patient->email)->send(new AppointmentConfirmation($appointment));
+            } catch (\Exception $e) {
+                // Silently fail for seeder/local dev
+            }
         }
 
-        if ($request->ajax()) {
-            return response()->json(['message' => 'Appointment created successfully', 'appointment' => $appointment]);
-        }
-
-        return redirect()->route('appointments.index')->with('success', 'Appointment created successfully.');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Appointment $appointment)
-    {
-        $patients = User::where('role', 'patient')->get();
-        $doctors = User::where('role', 'doctor')->get();
-        $services = Service::all();
-        return view('appointments.edit', compact('appointment', 'patients', 'doctors', 'services'));
+        return redirect()->route('appointments.index')->with('success', 'Rendez-vous créé avec succès.');
     }
 
     /**
@@ -99,14 +77,14 @@ class AppointmentController extends Controller
             'patient_id' => 'required|exists:users,id',
             'doctor_id' => 'required|exists:users,id',
             'service_id' => 'required|exists:services,id',
-            'appointment_time' => 'required|date',
-            'status' => 'required|in:scheduled,completed,cancelled',
+            'appointment_date' => 'required|date',
+            'status' => 'required|in:pending,confirmed,completed,cancelled',
             'notes' => 'nullable|string',
         ]);
 
         $appointment->update($validated);
 
-        return redirect()->route('appointments.index')->with('success', 'Appointment updated successfully.');
+        return redirect()->route('appointments.index')->with('success', 'Rendez-vous mis à jour avec succès.');
     }
 
     /**
@@ -115,6 +93,6 @@ class AppointmentController extends Controller
     public function destroy(Appointment $appointment)
     {
         $appointment->delete();
-        return redirect()->route('appointments.index')->with('success', 'Appointment deleted successfully.');
+        return redirect()->route('appointments.index')->with('success', 'Rendez-vous supprimé avec succès.');
     }
 }

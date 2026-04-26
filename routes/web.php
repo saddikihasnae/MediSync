@@ -5,19 +5,24 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('login');
 });
 
-Route::get('lang/{locale}', function ($locale) {
+Route::get('/lang/{locale}', function ($locale) {
     if (in_array($locale, ['ar', 'fr', 'en'])) {
-        session()->put('locale', $locale);
+        session(['locale' => $locale]);
+        App::setLocale($locale);
     }
     return redirect()->back();
 })->name('lang.switch');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+use App\Http\Controllers\DashboardController;
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -25,6 +30,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('appointments', AppointmentController::class);
+    Route::resource('services', \App\Http\Controllers\ServiceController::class);
+    Route::post('/dashboard/complete-diagnosis/{appointment}', [DashboardController::class, 'completeDiagnosis'])->name('dashboard.complete-diagnosis');
 });
 
 require __DIR__.'/auth.php';

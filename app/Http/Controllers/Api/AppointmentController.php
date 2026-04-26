@@ -29,11 +29,12 @@ class AppointmentController extends Controller
             'patient_id' => 'required|exists:users,id',
             'doctor_id' => 'required|exists:users,id',
             'service_id' => 'required|exists:services,id',
-            'appointment_time' => 'required|date|after:now',
+            'appointment_date' => 'required|date|after:now',
+            'status' => 'required|in:pending,confirmed,completed,cancelled',
             'notes' => 'nullable|string',
         ]);
 
-        $appointment = Appointment::create($validated + ['status' => 'scheduled']);
+        $appointment = Appointment::create($validated);
 
         return response()->json([
             'status' => 'success',
