@@ -4,18 +4,18 @@
     </x-slot>
 
     <div class="mb-6 flex flex-col md:flex-row justify-between items-center gap-4">
-        <h3 class="text-lg font-semibold text-gray-800">قائمة المواعيد</h3>
+        <h3 class="text-lg font-semibold text-gray-800">{{ __('messages.appointments') }}</h3>
         
         <div class="flex items-center gap-4 w-full md:w-auto">
             <!-- Search Input -->
             <div class="relative flex-1 md:w-64">
-                <input type="text" id="searchInput" placeholder="بحث باسم المريض أو الخدمة..." 
+                <input type="text" id="searchInput" placeholder="{{ __('messages.search_placeholder') }}" 
                        class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 px-4 py-2">
             </div>
 
             <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'quick-add-modal')" 
                     class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md shadow-sm transition whitespace-nowrap">
-                إضافة سريعة +
+                {{ __('messages.quick_add') }}
             </button>
         </div>
     </div>
@@ -31,12 +31,12 @@
             <table class="min-w-full divide-y divide-gray-200" id="appointmentsTable">
                 <thead class="bg-gray-50">
                     <tr>
-                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">المريض</th>
-                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">الخدمة</th>
-                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">الطبيب</th>
-                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">التاريخ والوقت</th>
-                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">الحالة</th>
-                        <th class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase tracking-wider">الإجراءات</th>
+                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.patient') }}</th>
+                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.services') }}</th>
+                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.doctor') }}</th>
+                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.date_time') }}</th>
+                        <th class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.status') }}</th>
+                        <th class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase tracking-wider">{{ __('messages.actions') }}</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200" id="appointmentsBody">
@@ -74,11 +74,10 @@
                                         <form action="{{ route('appointments.destroy', $appointment) }}" method="POST" class="p-6">
                                             @csrf
                                             @method('DELETE')
-                                            <h2 class="text-lg font-medium text-gray-900">هل أنت متأكد من حذف هذا الموعد؟</h2>
-                                            <p class="mt-1 text-sm text-gray-600">هذا الإجراء لا يمكن التراجع عنه.</p>
+                                            <h2 class="text-lg font-medium text-gray-900">{{ __('messages.delete_confirm') }}</h2>
                                             <div class="mt-6 flex justify-end gap-3">
-                                                <x-secondary-button x-on:click="$dispatch('close')">إلغاء</x-secondary-button>
-                                                <x-danger-button type="submit">تأكيد الحذف</x-danger-button>
+                                                <x-secondary-button x-on:click="$dispatch('close')">{{ __('messages.cancel') }}</x-secondary-button>
+                                                <x-danger-button type="submit">حذف</x-danger-button>
                                             </div>
                                         </form>
                                     </x-modal>
@@ -88,7 +87,7 @@
                     @empty
                         <tr>
                             <td colspan="6" class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-center">
-                                لا توجد مواعيد مسجلة.
+                                لا توجد نتائج.
                             </td>
                         </tr>
                     @endforelse
@@ -102,46 +101,46 @@
 
     <!-- Quick Add Modal -->
     <x-modal name="quick-add-modal" focusable>
-        <div class="p-6">
-            <h2 class="text-lg font-medium text-gray-900 mb-4">إضافة موعد سريع</h2>
+        <div class="p-6 text-start">
+            <h2 class="text-lg font-medium text-gray-900 mb-4">{{ __('messages.quick_add') }}</h2>
             <form id="quickAddForm">
                 @csrf
                 <div class="grid grid-cols-1 gap-4">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">المريض</label>
+                        <label class="block text-sm font-medium text-gray-700">{{ __('messages.patient') }}</label>
                         <select name="patient_id" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                            <option value="">اختر مريضاً</option>
+                            <option value="">--</option>
                             @foreach($patients as $patient)
                                 <option value="{{ $patient->id }}">{{ $patient->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">الخدمة</label>
+                        <label class="block text-sm font-medium text-gray-700">{{ __('messages.services') }}</label>
                         <select name="service_id" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                            <option value="">اختر خدمة</option>
+                            <option value="">--</option>
                             @foreach($services as $service)
                                 <option value="{{ $service->id }}">{{ $service->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">الطبيب</label>
+                        <label class="block text-sm font-medium text-gray-700">{{ __('messages.doctor') }}</label>
                         <select name="doctor_id" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
-                            <option value="">اختر طبيباً</option>
+                            <option value="">--</option>
                             @foreach($doctors as $doctor)
                                 <option value="{{ $doctor->id }}">{{ $doctor->name }}</option>
                             @endforeach
                         </select>
                     </div>
                     <div>
-                        <label class="block text-sm font-medium text-gray-700">التاريخ والوقت</label>
+                        <label class="block text-sm font-medium text-gray-700">{{ __('messages.date_time') }}</label>
                         <input type="datetime-local" name="appointment_time" required class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500">
                     </div>
                 </div>
                 <div class="mt-6 flex justify-end gap-3">
-                    <x-secondary-button x-on:click="$dispatch('close')">إلغاء</x-secondary-button>
-                    <x-primary-button type="button" id="submitQuickAdd">حفظ الموعد</x-primary-button>
+                    <x-secondary-button x-on:click="$dispatch('close')">{{ __('messages.cancel') }}</x-secondary-button>
+                    <x-primary-button type="button" id="submitQuickAdd">{{ __('messages.save') }}</x-primary-button>
                 </div>
             </form>
         </div>

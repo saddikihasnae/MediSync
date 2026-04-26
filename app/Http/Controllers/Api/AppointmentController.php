@@ -38,7 +38,7 @@ class AppointmentController extends Controller
         return response()->json([
             'status' => 'success',
             'message' => 'Appointment booked successfully via API.',
-            'data' => $appointment
-        ], 211);
+            'data' => $appointment->load(['patient', 'service', 'doctor'])
+        ], 201);
     }
 }
