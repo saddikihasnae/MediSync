@@ -10,8 +10,8 @@
         <div class="max-w-4xl mx-auto">
             <!-- Header -->
             <div class="text-center mb-12">
-                <h1 class="text-4xl font-black text-slate-800 mb-4 tracking-tight">Book Your Appointment</h1>
-                <p class="text-sm font-bold text-slate-400 uppercase tracking-[0.2em]">Follow the steps to secure your session</p>
+                <h1 class="text-4xl font-black text-slate-800 mb-4 tracking-tight">{{ __('messages.book_your_appointment') }}</h1>
+                <p class="text-sm font-bold text-slate-400 uppercase tracking-[0.2em]">{{ __('messages.booking_steps_subtitle') }}</p>
             </div>
 
             <!-- Steps Progress -->
@@ -31,7 +31,7 @@
 
                 <!-- STEP 1: SELECT SERVICE -->
                 <div x-show="step === 1" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-y-4">
-                    <h2 class="text-xl font-black text-slate-800 mb-8 text-center">Step 1: Select Medical Service</h2>
+                    <h2 class="text-xl font-black text-slate-800 mb-8 text-center">{{ __('messages.step_1_select_service') }}</h2>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         @foreach($services as $service)
                         <div @click="selectedService = {{ $service->id }}; selectedServiceName = '{{ $service->name }}'; step = 2" 
@@ -55,19 +55,19 @@
                 <!-- STEP 2: DATE & TIME -->
                 <div x-show="step === 2" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 transform translate-y-4">
                     <div class="bg-white rounded-[2.5rem] p-10 shadow-sm border border-slate-100 max-w-xl mx-auto">
-                        <h2 class="text-xl font-black text-slate-800 mb-8 text-center">Step 2: Choose Date & Time</h2>
+                        <h2 class="text-xl font-black text-slate-800 mb-8 text-center">{{ __('messages.step_2_choose_date_time') }}</h2>
                         <div class="space-y-6">
                             <div class="p-6 bg-emerald-50 rounded-3xl border border-emerald-100 mb-6">
-                                <p class="text-xs font-bold text-indigo-700">Selected Service: <span class="font-black text-indigo-900" x-text="selectedServiceName"></span></p>
+                                <p class="text-xs font-bold text-indigo-700">{{ __('messages.selected_service_label') }} <span class="font-black text-indigo-900" x-text="selectedServiceName"></span></p>
                             </div>
                             <div class="space-y-2">
-                                <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Appointment Date & Time</label>
+                                <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.appointment_date_time_label') }}</label>
                                 <input type="datetime-local" name="appointment_date" x-model="date" required 
                                        class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700 focus:ring-4 focus:ring-emerald-100 transition-all">
                             </div>
                             <div class="flex gap-4 pt-6">
-                                <button type="button" @click="step = 1" class="flex-1 py-4 bg-slate-100 text-slate-400 font-black rounded-2xl">Back</button>
-                                <button type="button" @click="if(date) step = 3" class="flex-1 py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100">Next Step</button>
+                                <button type="button" @click="step = 1" class="flex-1 py-4 bg-slate-100 text-slate-400 font-black rounded-2xl">{{ __('messages.back') }}</button>
+                                <button type="button" @click="if(date) step = 3" class="flex-1 py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100">{{ __('messages.next_step') }}</button>
                             </div>
                         </div>
                     </div>
@@ -79,28 +79,28 @@
                         <div class="w-20 h-20 bg-emerald-50 text-emerald-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
                             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                         </div>
-                        <h2 class="text-2xl font-black text-slate-800 mb-2">Final Step: Review & Confirm</h2>
-                        <p class="text-sm font-bold text-slate-400 mb-10">Please review your appointment details before submitting.</p>
+                        <h2 class="text-2xl font-black text-slate-800 mb-2">{{ __('messages.final_step_review_confirm') }}</h2>
+                        <p class="text-sm font-bold text-slate-400 mb-10">{{ __('messages.review_details_subtitle') }}</p>
 
                         <div class="space-y-4 mb-10">
                             <div class="flex justify-between p-4 bg-slate-50 rounded-2xl">
-                                <span class="text-xs font-black text-slate-400 uppercase">Service</span>
+                                <span class="text-xs font-black text-slate-400 uppercase">{{ __('messages.service') }}</span>
                                 <span class="text-sm font-black text-slate-800" x-text="selectedServiceName"></span>
                             </div>
                             <div class="flex justify-between p-4 bg-slate-50 rounded-2xl">
-                                <span class="text-xs font-black text-slate-400 uppercase">Date & Time</span>
+                                <span class="text-xs font-black text-slate-400 uppercase">{{ __('messages.date_time') }}</span>
                                 <span class="text-sm font-black text-slate-800" x-text="date.replace('T', ' ')"></span>
                             </div>
                             <div class="space-y-2 text-start">
-                                <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Medical Notes (Optional)</label>
-                                <textarea name="notes" x-model="notes" rows="3" placeholder="Symptoms, medical history, or requests..." 
+                                <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.medical_notes_optional') }}</label>
+                                <textarea name="notes" x-model="notes" rows="3" placeholder="{{ __('messages.symptoms_placeholder') }}" 
                                           class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700 focus:ring-4 focus:ring-emerald-100 transition-all"></textarea>
                             </div>
                         </div>
 
                         <div class="flex flex-col gap-4">
-                            <button type="submit" class="w-full py-5 bg-emerald-600 text-white font-black rounded-3xl shadow-2xl shadow-emerald-100 hover:scale-[1.02] transition-all">Confirm & Book Appointment</button>
-                            <button type="button" @click="step = 2" class="w-full py-4 bg-slate-100 text-slate-400 font-black rounded-2xl">Go Back</button>
+                            <button type="submit" class="w-full py-5 bg-emerald-600 text-white font-black rounded-3xl shadow-2xl shadow-emerald-100 hover:scale-[1.02] transition-all">{{ __('messages.confirm_book_appointment') }}</button>
+                            <button type="button" @click="step = 2" class="w-full py-4 bg-slate-100 text-slate-400 font-black rounded-2xl">{{ __('messages.go_back') }}</button>
                         </div>
                     </div>
                 </div>

@@ -8,7 +8,7 @@
 
     <!-- Sidebar Container -->
     <div :class="open ? 'translate-x-0' : (document.dir === 'rtl' ? 'translate-x-full lg:translate-x-0' : '-translate-x-full lg:translate-x-0')" 
-         class="fixed inset-y-0 start-0 w-72 m-6 bg-slate-900 rounded-[2.5rem] shadow-2xl transition-transform duration-300 ease-in-out flex flex-col overflow-hidden border border-slate-800">
+         class="fixed inset-y-0 start-0 w-72 m-6 bg-slate-900 dark:bg-slate-950 rounded-[2.5rem] shadow-2xl transition-transform duration-300 ease-in-out flex flex-col overflow-hidden border border-slate-800 dark:border-slate-800">
         
         <!-- Logo Section -->
         <div class="p-8">
@@ -60,7 +60,7 @@
         </nav>
 
         <!-- User Profile Bottom Section -->
-        <div class="p-6 bg-slate-800/50 mt-auto border-t border-slate-800">
+        <div class="p-6 bg-slate-800/50 dark:bg-slate-900/50 mt-auto border-t border-slate-800">
             <div class="flex items-center gap-4 mb-4">
                 <div class="w-12 h-12 bg-emerald-600 rounded-2xl flex items-center justify-center text-white font-black shadow-lg">
                     {{ substr(Auth::user()->name, 0, 1) }}

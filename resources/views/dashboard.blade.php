@@ -53,11 +53,11 @@
         </div>
 
         <!-- Pills Tabs with Alpine.js Logic -->
-        <div class="mb-10 flex gap-2 p-1 bg-white rounded-2xl shadow-sm border border-slate-100 w-fit">
-            <button @click="activeTab = 'overview'" :class="activeTab === 'overview' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' : 'text-slate-400 hover:bg-slate-50 hover:text-emerald-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">{{ __('messages.overview') }}</button>
-            <button @click="activeTab = 'reports'" :class="activeTab === 'reports' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' : 'text-slate-400 hover:bg-slate-50 hover:text-emerald-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">{{ __('messages.medical_reports') }}</button>
-            <button @click="activeTab = 'patients'" :class="activeTab === 'patients' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' : 'text-slate-400 hover:bg-slate-50 hover:text-emerald-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">{{ __('messages.patients_directory') }}</button>
-            <button @click="activeTab = 'diagnose'" :class="activeTab === 'diagnose' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' : 'text-slate-400 hover:bg-slate-50 hover:text-emerald-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">{{ __('messages.diagnose_now') }}</button>
+        <div class="mb-10 flex gap-2 p-1 bg-white dark:bg-slate-900 rounded-2xl shadow-sm border border-slate-100 dark:border-slate-800 w-fit">
+            <button @click="activeTab = 'overview'" :class="activeTab === 'overview' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' : 'text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-emerald-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">{{ __('messages.overview') }}</button>
+            <button @click="activeTab = 'reports'" :class="activeTab === 'reports' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' : 'text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-emerald-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">{{ __('messages.medical_reports') }}</button>
+            <button @click="activeTab = 'patients'" :class="activeTab === 'patients' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' : 'text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-emerald-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">{{ __('messages.patients_directory') }}</button>
+            <button @click="activeTab = 'diagnose'" :class="activeTab === 'diagnose' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' : 'text-slate-400 dark:text-slate-500 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-emerald-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">{{ __('messages.diagnose_now') }}</button>
         </div>
 
         <!-- ========================================== -->
@@ -67,15 +67,15 @@
             <!-- Stat Cards -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                 @foreach($stats as $key => $stat)
-                <div class="bg-white p-8 rounded-[2rem] shadow-sm border border-slate-100 relative overflow-hidden group hover:shadow-xl transition-all duration-500">
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 relative overflow-hidden group hover:shadow-xl transition-all duration-500">
                     <div class="relative z-10">
-                        <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-2">{{ __('messages.' . $key) }}</p>
-                        <h3 class="text-4xl font-black text-slate-800 tracking-tighter mb-4">{{ $stat['value'] }}</h3>
+                        <p class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2">{{ __('messages.' . $key) }}</p>
+                        <h3 class="text-4xl font-black text-slate-800 dark:text-white tracking-tighter mb-4">{{ $stat['value'] }}</h3>
                         <div class="flex items-center gap-1">
-                            <span class="text-xs font-black {{ str_contains($stat['change'], '+') ? 'text-emerald-500' : 'text-rose-500' }} bg-slate-50 px-2 py-1 rounded-lg">
+                            <span class="text-xs font-black {{ str_contains($stat['change'], '+') ? 'text-emerald-500' : 'text-rose-500' }} bg-slate-50 dark:bg-slate-800 px-2 py-1 rounded-lg">
                                 {{ $stat['change'] }}
                             </span>
-                            <span class="text-[10px] font-bold text-slate-300 uppercase tracking-wider">vs last month</span>
+                            <span class="text-[10px] font-bold text-slate-300 dark:text-slate-600 uppercase tracking-wider">vs last month</span>
                         </div>
                     </div>
                     <div class="absolute bottom-0 end-0 w-32 h-16 opacity-10 group-hover:opacity-30 transition-opacity">
@@ -89,26 +89,26 @@
 
             <!-- Charts Area -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-10">
-                <div class="lg:col-span-8 bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100">
+                <div class="lg:col-span-8 bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-800">
                     <div class="flex justify-between items-center mb-8">
                         <div>
-                            <h3 class="text-xl font-black text-slate-800 tracking-tight">{{ __('messages.financial_performance') }}</h3>
-                            <p class="text-sm text-slate-400 font-medium">{{ __('messages.revenue_metrics') }}</p>
+                            <h3 class="text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ __('messages.financial_performance') }}</h3>
+                            <p class="text-sm text-slate-400 dark:text-slate-500 font-medium">{{ __('messages.revenue_metrics') }}</p>
                         </div>
                     </div>
                     <div class="h-80">
                         <canvas id="overviewChart"></canvas>
                     </div>
                 </div>
-                <div class="lg:col-span-4 bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100">
+                <div class="lg:col-span-4 bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-800">
                     <div class="mb-8 text-center">
-                        <h3 class="text-xl font-black text-slate-800 tracking-tight">{{ __('messages.clinic_capacity') }}</h3>
-                        <p class="text-sm text-slate-400 font-medium">{{ __('messages.resource_distribution') }}</p>
+                        <h3 class="text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ __('messages.clinic_capacity') }}</h3>
+                        <p class="text-sm text-slate-400 dark:text-slate-500 font-medium">{{ __('messages.resource_distribution') }}</p>
                     </div>
                     <div class="h-64 relative flex items-center justify-center">
                         <canvas id="diagnoseChart"></canvas>
                         <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-                            <span class="text-3xl font-black text-slate-800">84%</span>
+                            <span class="text-3xl font-black text-slate-800 dark:text-white">84%</span>
                         </div>
                     </div>
                 </div>
@@ -116,8 +116,8 @@
 
             <!-- Timeline & Visits -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                <div class="lg:col-span-8 bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-100 relative">
-                    <h3 class="text-xl font-black text-slate-800 tracking-tight mb-16">{{ __('messages.today_schedule') }}</h3>
+                <div class="lg:col-span-8 bg-white dark:bg-slate-900 p-10 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-800 relative">
+                    <h3 class="text-xl font-black text-slate-800 dark:text-white tracking-tight mb-16">{{ __('messages.today_schedule') }}</h3>
                     <div class="relative pb-24 px-4 overflow-x-auto no-scrollbar">
                         <div class="absolute start-0 end-0 top-6 h-1 bg-slate-100 rounded-full mx-10"></div>
                         <div class="flex justify-between min-w-[800px] relative">
@@ -138,8 +138,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="lg:col-span-4 bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100">
-                    <h3 class="text-xl font-black text-slate-800 tracking-tight mb-8">{{ __('messages.latest_visits') }}</h3>
+                <div class="lg:col-span-4 bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-800">
+                    <h3 class="text-xl font-black text-slate-800 dark:text-white tracking-tight mb-8">{{ __('messages.latest_visits') }}</h3>
                     <div class="space-y-6">
                         @foreach($latestVisits as $visit)
                         <div class="flex items-center justify-between group">
@@ -148,8 +148,8 @@
                                     <span class="text-emerald-600 font-black">{{ substr($visit->patient->name, 0, 1) }}</span>
                                 </div>
                                 <div>
-                                    <p class="text-sm font-black text-slate-800">{{ $visit->patient->name }}</p>
-                                    <p class="text-[10px] font-bold text-slate-400 uppercase">{{ $visit->service->name }}</p>
+                                    <p class="text-sm font-black text-slate-800 dark:text-slate-200">{{ $visit->patient->name }}</p>
+                                    <p class="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase">{{ $visit->service->name }}</p>
                                 </div>
                             </div>
                             <span class="text-[10px] font-black text-slate-400">{{ \Carbon\Carbon::parse($visit->appointment_date)->format('H:i') }}</span>
@@ -164,30 +164,30 @@
         <!-- TAB 2: MEDICAL REPORTS -->
         <!-- ========================================== -->
         <div x-show="activeTab === 'reports'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4">
-            <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
-                <div class="p-8 border-b border-slate-50 flex justify-between items-center bg-white relative">
+            <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-800 overflow-hidden">
+                <div class="p-8 border-b border-slate-50 dark:border-slate-800 flex justify-between items-center bg-white dark:bg-slate-900 relative">
                     <div>
-                        <h3 class="text-2xl font-black text-slate-800 tracking-tight">{{ __('messages.medical_records_directory') }}</h3>
-                        <p class="text-sm text-slate-400 font-bold">{{ __('messages.history_reports') }}</p>
+                        <h3 class="text-2xl font-black text-slate-800 dark:text-white tracking-tight">{{ __('messages.medical_records_directory') }}</h3>
+                        <p class="text-sm text-slate-400 dark:text-slate-500 font-bold">{{ __('messages.history_reports') }}</p>
                     </div>
                     
                     <!-- Filter Dropdown -->
                     <div class="relative">
-                        <button @click="showFilterDropdown = !showFilterDropdown" class="p-3 bg-slate-50 text-slate-400 rounded-2xl hover:bg-emerald-50 hover:text-emerald-600 transition-all focus:outline-none">
+                        <button @click="showFilterDropdown = !showFilterDropdown" class="p-3 bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 rounded-2xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-600 transition-all focus:outline-none">
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
                         </button>
-                        <div x-show="showFilterDropdown" @click.away="showFilterDropdown = false" class="absolute end-0 mt-4 w-60 bg-white rounded-[2rem] shadow-2xl border border-slate-100 z-50 p-3 overflow-hidden flex flex-col gap-1" x-cloak x-transition>
-                            <p class="px-4 py-3 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-50 mb-2 italic">{{ __('messages.select_category') }}</p>
+                        <div x-show="showFilterDropdown" @click.away="showFilterDropdown = false" class="absolute end-0 mt-4 w-60 bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl border border-slate-100 dark:border-slate-800 z-50 p-3 overflow-hidden flex flex-col gap-1" x-cloak x-transition>
+                            <p class="px-4 py-3 text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] border-b border-slate-50 dark:border-slate-800 mb-2 italic">{{ __('messages.select_category') }}</p>
                             
                             <a href="{{ route('dashboard', ['tab' => 'reports', 'type' => 'all']) }}" 
-                               class="flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-black transition-all {{ request('type', 'all') == 'all' ? 'bg-emerald-50 text-emerald-600' : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
+                               class="flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-black transition-all {{ request('type', 'all') == 'all' ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-emerald-600' }}">
                                 <span>{{ __('messages.all_reports') ?? 'All Reports' }}</span>
                                 @if(request('type', 'all') == 'all') <div class="w-2 h-2 bg-emerald-500 rounded-full"></div> @endif
                             </a>
 
                             @foreach($reportTypes as $type)
                             <a href="{{ route('dashboard', ['tab' => 'reports', 'type' => $type]) }}" 
-                               class="flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-black transition-all {{ request('type') == $type ? 'bg-emerald-50 text-emerald-600' : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
+                               class="flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-black transition-all {{ request('type') == $type ? 'bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600' : 'text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-emerald-600' }}">
                                 <span>{{ $type }}</span>
                                 @if(request('type') == $type) <div class="w-2 h-2 bg-emerald-500 rounded-full"></div> @endif
                             </a>
@@ -198,31 +198,31 @@
 
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse">
-                        <thead class="bg-slate-50/50">
+                        <thead class="bg-slate-50/50 dark:bg-slate-800/50">
                             <tr>
-                                <th class="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.report_id') }}</th>
-                                <th class="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.patient') }}</th>
-                                <th class="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.status') }}</th>
-                                <th class="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.date') ?? 'Date' }}</th>
-                                <th class="px-8 py-5 text-end text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.actions') }}</th>
+                                <th class="px-8 py-5 text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{{ __('messages.report_id') }}</th>
+                                <th class="px-8 py-5 text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{{ __('messages.patient') }}</th>
+                                <th class="px-8 py-5 text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{{ __('messages.status') }}</th>
+                                <th class="px-8 py-5 text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{{ __('messages.date') ?? 'Date' }}</th>
+                                <th class="px-8 py-5 text-end text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{{ __('messages.actions') }}</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-100">
+                        <tbody class="divide-y divide-slate-100 dark:divide-slate-800">
                             @forelse($medicalReports as $report)
-                            <tr class="hover:bg-slate-50 transition-all group">
+                            <tr class="hover:bg-slate-50 dark:hover:bg-slate-800 transition-all group">
                                 <td class="px-8 py-6 text-sm font-black text-emerald-600 tracking-tight italic">#{{ $report->report_id }}</td>
                                 <td class="px-8 py-6">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 font-black shadow-sm">
+                                        <div class="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-900/20 flex items-center justify-center text-emerald-600 font-black shadow-sm">
                                             {{ substr($report->patient->name, 0, 2) }}
                                         </div>
-                                        <span class="text-sm font-black text-slate-700 tracking-tight">{{ $report->patient->name }}</span>
+                                        <span class="text-sm font-black text-slate-700 dark:text-slate-200 tracking-tight">{{ $report->patient->name }}</span>
                                     </div>
                                 </td>
                                 <td class="px-8 py-6">
-                                    <span class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-emerald-50 text-emerald-600 border border-emerald-100">{{ $report->type }}</span>
+                                    <span class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 border border-emerald-100 dark:border-emerald-800">{{ $report->type }}</span>
                                 </td>
-                                <td class="px-8 py-6 text-sm font-bold text-slate-400">{{ $report->report_date->format('d M, Y') }}</td>
+                                <td class="px-8 py-6 text-sm font-bold text-slate-400 dark:text-slate-500">{{ $report->report_date->format('d M, Y') }}</td>
                                 <td class="px-8 py-6 text-end space-x-2">
                                     <button @click="openReport({{ json_encode([
                                         'id' => $report->report_id,
@@ -231,8 +231,8 @@
                                         'date' => $report->report_date->format('d M, Y'),
                                         'content' => $report->result_summary,
                                         'download_url' => route('medical-reports.download', $report)
-                                    ]) }})" class="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-emerald-600 hover:text-white transition-all shadow-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
-                                    <button @click="triggerDownload('{{ route('medical-reports.download', $report) }}')" class="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-emerald-600 hover:text-white transition-all shadow-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg></button>
+                                    ]) }})" class="p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 rounded-xl hover:bg-emerald-600 hover:text-white transition-all shadow-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
+                                    <button @click="triggerDownload('{{ route('medical-reports.download', $report) }}')" class="p-2.5 bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-500 rounded-xl hover:bg-emerald-600 hover:text-white transition-all shadow-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg></button>
                                 </td>
                             </tr>
                             @empty
@@ -250,7 +250,7 @@
                 </div>
                 
                 <!-- Pagination -->
-                <div class="p-8 bg-slate-50/30 border-t border-slate-50">
+                <div class="p-8 bg-slate-50/30 dark:bg-slate-800/30 border-t border-slate-50 dark:border-slate-800">
                     {{ $medicalReports->appends(['tab' => 'reports', 'patients_page' => $patients->currentPage()])->links('vendor.pagination.tailwind_custom') }}
                 </div>
             </div>
@@ -262,8 +262,8 @@
         <div x-show="activeTab === 'patients'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4">
             <div class="flex justify-between items-center mb-8">
                 <div>
-                    <h3 class="text-2xl font-black text-slate-800 tracking-tight">{{ __('messages.patients_directory') }}</h3>
-                    <p class="text-sm text-slate-400 font-bold uppercase tracking-widest mt-1">{{ __('messages.manage_profiles') }}</p>
+                    <h3 class="text-2xl font-black text-slate-800 dark:text-white tracking-tight">{{ __('messages.patients_directory') }}</h3>
+                    <p class="text-sm text-slate-400 dark:text-slate-500 font-bold uppercase tracking-widest mt-1">{{ __('messages.manage_profiles') }}</p>
                 </div>
                 <button @click="$dispatch('open-modal', 'add-patient-modal')" class="bg-emerald-600 text-white px-8 py-4 rounded-[2rem] font-black text-sm shadow-xl shadow-emerald-100 hover:scale-105 active:scale-95 transition-all flex items-center gap-3">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
@@ -273,22 +273,22 @@
             
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                 @foreach($patients as $patient)
-                <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 text-center group hover:shadow-2xl hover:border-emerald-100 transition-all duration-500 relative">
-                    <div class="w-20 h-20 rounded-[2rem] bg-emerald-50 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-500 relative">
+                <div class="bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-800 text-center group hover:shadow-2xl hover:border-emerald-100 transition-all duration-500 relative">
+                    <div class="w-20 h-20 rounded-[2rem] bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-500 relative">
                         <span class="text-3xl font-black text-emerald-600">{{ substr($patient->name, 0, 1) }}</span>
-                        <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-emerald-500 border-4 border-white rounded-full"></div>
+                        <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-emerald-500 border-4 border-white dark:border-slate-900 rounded-full"></div>
                     </div>
-                    <h4 class="font-black text-xl text-slate-800 mb-1 tracking-tight">{{ $patient->name }}</h4>
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6 italic">{{ $patient->email }}</p>
+                    <h4 class="font-black text-xl text-slate-800 dark:text-white mb-1 tracking-tight">{{ $patient->name }}</h4>
+                    <p class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] mb-6 italic">{{ $patient->email }}</p>
                     
-                    <div class="flex justify-center items-center gap-6 py-4 bg-slate-50 rounded-2xl border border-slate-100">
+                    <div class="flex justify-center items-center gap-6 py-4 bg-slate-50 dark:bg-slate-800 rounded-2xl border border-slate-100 dark:border-slate-700">
                         <div class="text-center">
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">{{ __('messages.age') }}</p>
-                            <p class="text-sm font-black text-slate-700">{{ $patient->age ?? 'N/A' }}</p>
+                            <p class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-tighter">{{ __('messages.age') }}</p>
+                            <p class="text-sm font-black text-slate-700 dark:text-slate-300">{{ $patient->age ?? 'N/A' }}</p>
                         </div>
-                        <div class="w-px h-6 bg-slate-200"></div>
+                        <div class="w-px h-6 bg-slate-200 dark:bg-slate-700"></div>
                         <div class="text-center">
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">{{ __('messages.blood_group') }}</p>
+                            <p class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-tighter">{{ __('messages.blood_group') }}</p>
                             <p class="text-sm font-black text-emerald-600">A+</p>
                         </div>
                     </div>
@@ -308,25 +308,25 @@
         <div x-show="activeTab === 'diagnose'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <!-- Waiting List -->
-                <div class="lg:col-span-4 bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100">
+                <div class="lg:col-span-4 bg-white dark:bg-slate-900 p-8 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-800">
                     <div class="flex items-center justify-between mb-8">
-                        <h3 class="text-xl font-black text-slate-800 tracking-tight">{{ __('messages.waiting_room') }}</h3>
-                        <span class="bg-rose-100 text-rose-600 text-[10px] font-black px-3 py-1 rounded-lg uppercase tracking-widest">{{ $pendingAppointments->count() }} Live</span>
+                        <h3 class="text-xl font-black text-slate-800 dark:text-white tracking-tight">{{ __('messages.waiting_room') }}</h3>
+                        <span class="bg-rose-100 dark:bg-rose-900/20 text-rose-600 text-[10px] font-black px-3 py-1 rounded-lg uppercase tracking-widest">{{ $pendingAppointments->count() }} Live</span>
                     </div>
                     <div class="space-y-4 custom-scrollbar max-h-[600px] overflow-y-auto pr-2">
                         @forelse($pendingAppointments as $app)
                         <div @click="selectedAppointment = { id: {{ $app->id }}, patient_name: '{{ $app->patient->name }}', service_name: '{{ $app->service->name }}' }" 
-                             :class="selectedAppointment?.id === {{ $app->id }} ? 'bg-emerald-600 border-emerald-600' : 'bg-slate-50 border-slate-100 hover:bg-emerald-50 hover:border-emerald-100'"
+                             :class="selectedAppointment?.id === {{ $app->id }} ? 'bg-emerald-600 border-emerald-600' : 'bg-slate-50 dark:bg-slate-800 border-slate-100 dark:border-slate-700 hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:border-emerald-100'"
                              class="p-5 rounded-3xl border flex justify-between items-center group cursor-pointer transition-all">
                             <div class="flex items-center gap-4">
-                                <div :class="selectedAppointment?.id === {{ $app->id }} ? 'bg-white/20 text-white' : 'bg-white text-emerald-600'" 
+                                <div :class="selectedAppointment?.id === {{ $app->id }} ? 'bg-white/20 text-white' : 'bg-white dark:bg-slate-900 text-emerald-600'" 
                                      class="w-12 h-12 rounded-2xl flex items-center justify-center font-black shadow-sm group-hover:scale-110 transition-transform">
                                     {{ substr($app->patient->name, 0, 1) }}
                                 </div>
                                 <div>
-                                    <p :class="selectedAppointment?.id === {{ $app->id }} ? 'text-white' : 'text-slate-800'" 
+                                    <p :class="selectedAppointment?.id === {{ $app->id }} ? 'text-white' : 'text-slate-800 dark:text-slate-200'" 
                                        class="text-sm font-black transition-colors">{{ $app->patient->name }}</p>
-                                    <p :class="selectedAppointment?.id === {{ $app->id }} ? 'text-emerald-100' : 'text-slate-400'" 
+                                    <p :class="selectedAppointment?.id === {{ $app->id }} ? 'text-emerald-100' : 'text-slate-400 dark:text-slate-500'" 
                                        class="text-[10px] font-black uppercase tracking-widest">{{ $app->service->name }}</p>
                                 </div>
                             </div>
@@ -346,21 +346,21 @@
                 </div>
 
                 <!-- Diagnosis Form -->
-                <div class="lg:col-span-8 bg-white p-12 rounded-[3rem] shadow-sm border border-slate-100 relative overflow-hidden">
+                <div class="lg:col-span-8 bg-white dark:bg-slate-900 p-12 rounded-[3rem] shadow-sm border border-slate-100 dark:border-slate-800 relative overflow-hidden">
                     <!-- Empty State for Form -->
-                    <div x-show="!selectedAppointment" class="absolute inset-0 bg-white/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center text-center p-12">
-                        <div class="w-24 h-24 bg-emerald-50 rounded-[2rem] flex items-center justify-center text-emerald-600 mb-6">
+                    <div x-show="!selectedAppointment" class="absolute inset-0 bg-white/80 dark:bg-slate-900/80 backdrop-blur-sm z-10 flex flex-col items-center justify-center text-center p-12">
+                        <div class="w-24 h-24 bg-emerald-50 dark:bg-emerald-900/20 rounded-[2rem] flex items-center justify-center text-emerald-600 mb-6">
                             <svg class="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
                         </div>
-                        <h4 class="text-2xl font-black text-slate-800 mb-2">{{ __('messages.no_patient_selected') }}</h4>
-                        <p class="text-slate-400 font-bold max-w-xs">{{ __('messages.select_patient_msg') }}</p>
+                        <h4 class="text-2xl font-black text-slate-800 dark:text-white mb-2">{{ __('messages.no_patient_selected') }}</h4>
+                        <p class="text-slate-400 dark:text-slate-500 font-bold max-w-xs">{{ __('messages.select_patient_msg') }}</p>
                     </div>
 
                     <div class="mb-10">
-                        <h3 class="text-3xl font-black text-slate-800 tracking-tight">{{ __('messages.active_consultation') }}</h3>
+                        <h3 class="text-3xl font-black text-slate-800 dark:text-white tracking-tight">{{ __('messages.active_consultation') }}</h3>
                         <p class="text-sm text-emerald-600 font-black uppercase tracking-widest mt-2 flex items-center gap-2">
                             <span class="w-2 h-2 bg-emerald-500 rounded-full animate-ping"></span>
-                            {{ __('messages.diagnosing') }} <span x-text="selectedAppointment?.patient_name" class="text-slate-800"></span>
+                            {{ __('messages.diagnosing') }} <span x-text="selectedAppointment?.patient_name" class="text-slate-800 dark:text-slate-200"></span>
                         </p>
                     </div>
                     
@@ -370,15 +370,15 @@
                         
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                             <div class="space-y-3">
-                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ms-2">{{ __('messages.assigned_service') }}</label>
-                                <div class="w-full bg-slate-50 border-2 border-slate-100 rounded-2xl py-4 px-6 font-black text-slate-400">
+                                <label class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ms-2">{{ __('messages.assigned_service') }}</label>
+                                <div class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-slate-100 dark:border-slate-700 rounded-2xl py-4 px-6 font-black text-slate-400 dark:text-slate-500">
                                     <span x-text="selectedAppointment?.service_name"></span>
                                 </div>
                             </div>
                             <div class="space-y-3">
-                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ms-2">{{ __('messages.visit_category') }}</label>
+                                <label class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ms-2">{{ __('messages.visit_category') }}</label>
                                 <div class="relative">
-                                    <select name="visit_category" required class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 px-6 font-black text-slate-700 transition-all outline-none appearance-none">
+                                    <select name="visit_category" required class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-900 rounded-2xl py-4 px-6 font-black text-slate-700 dark:text-slate-200 transition-all outline-none appearance-none">
                                         <option value="" disabled selected>Select Category</option>
                                         @foreach($services as $service)
                                             <option value="{{ $service->name }}">{{ $service->name }}</option>
@@ -392,17 +392,17 @@
                         </div>
 
                         <div class="space-y-3">
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ms-2">{{ __('messages.symptoms_observations') }}</label>
-                            <textarea name="symptoms" required rows="6" class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-[2rem] p-8 font-black text-slate-700 placeholder-slate-300 transition-all outline-none" placeholder="{{ __('messages.enter_detailed_symptoms') ?? 'Enter detailed symptoms...' }}"></textarea>
+                            <label class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ms-2">{{ __('messages.symptoms_observations') }}</label>
+                            <textarea name="symptoms" required rows="6" class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-900 rounded-[2rem] p-8 font-black text-slate-700 dark:text-slate-200 placeholder-slate-300 dark:placeholder-slate-600 transition-all outline-none" placeholder="{{ __('messages.enter_detailed_symptoms') ?? 'Enter detailed symptoms...' }}"></textarea>
                         </div>
 
                         <div class="space-y-3">
-                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ms-2">{{ __('messages.prescription_advice') }}</label>
+                            <label class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ms-2">{{ __('messages.prescription_advice') }}</label>
                             <div class="relative">
                                 <span class="absolute start-6 top-5 text-emerald-600">
                                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
                                 </span>
-                                <input name="prescription" type="text" class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 ps-14 pe-6 font-black text-slate-700 placeholder-slate-300 transition-all outline-none" placeholder="Medication, Dosage, Period">
+                                <input name="prescription" type="text" class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-900 rounded-2xl py-4 ps-14 pe-6 font-black text-slate-700 dark:text-slate-200 placeholder-slate-300 dark:placeholder-slate-600 transition-all outline-none" placeholder="Medication, Dosage, Period">
                             </div>
                         </div>
 
@@ -423,17 +423,17 @@
              x-transition:enter-end="opacity-100"
              x-cloak>
             <div @click.away="showReportModal = false" 
-                 class="bg-white w-full max-w-2xl rounded-[3rem] shadow-2xl overflow-hidden border border-slate-100"
+                 class="bg-white dark:bg-slate-900 w-full max-w-2xl rounded-[3rem] shadow-2xl overflow-hidden border border-slate-100 dark:border-slate-800"
                  x-transition:enter="transition ease-out duration-300"
                  x-transition:enter-start="scale-90 opacity-0 translate-y-10"
                  x-transition:enter-end="scale-100 opacity-100 translate-y-0">
                 
-                <div class="p-10 border-b border-slate-50 bg-emerald-50/30 flex justify-between items-start">
+                <div class="p-10 border-b border-slate-50 dark:border-slate-800 bg-emerald-50/30 dark:bg-emerald-900/10 flex justify-between items-start">
                     <div>
                         <span class="px-4 py-1.5 bg-emerald-600 text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-4 inline-block shadow-lg shadow-emerald-200">Official Record</span>
-                        <h2 class="text-4xl font-black text-slate-800 tracking-tighter" x-text="'Report #' + selectedReport?.id"></h2>
+                        <h2 class="text-4xl font-black text-slate-800 dark:text-white tracking-tighter" x-text="'Report #' + selectedReport?.id"></h2>
                     </div>
-                    <button @click="showReportModal = false" class="p-3 bg-white text-slate-400 hover:text-rose-600 rounded-2xl shadow-sm transition-colors focus:outline-none">
+                    <button @click="showReportModal = false" class="p-3 bg-white dark:bg-slate-800 text-slate-400 hover:text-rose-600 rounded-2xl shadow-sm transition-colors focus:outline-none">
                         <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     </button>
                 </div>
@@ -441,18 +441,18 @@
                 <div class="p-12 space-y-10">
                     <div class="grid grid-cols-2 gap-12">
                         <div>
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 italic">Patient Name</p>
-                            <p class="text-xl font-black text-slate-800" x-text="selectedReport?.patient"></p>
+                            <p class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 italic">Patient Name</p>
+                            <p class="text-xl font-black text-slate-800 dark:text-white" x-text="selectedReport?.patient"></p>
                         </div>
                         <div>
-                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 italic">Exam Date</p>
-                            <p class="text-xl font-black text-slate-800" x-text="selectedReport?.date"></p>
+                            <p class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-2 italic">Exam Date</p>
+                            <p class="text-xl font-black text-slate-800 dark:text-white" x-text="selectedReport?.date"></p>
                         </div>
                     </div>
 
-                    <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100">
-                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 italic">Diagnostic Conclusion</p>
-                        <p class="text-lg font-bold text-slate-600 italic leading-relaxed" x-text="selectedReport?.content || 'All vitals are normal and within established parameters. No immediate clinical intervention required.'"></p>
+                    <div class="bg-slate-50 dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700">
+                        <p class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest mb-4 italic">Diagnostic Conclusion</p>
+                        <p class="text-lg font-bold text-slate-600 dark:text-slate-300 italic leading-relaxed" x-text="selectedReport?.content || 'All vitals are normal and within established parameters. No immediate clinical intervention required.'"></p>
                     </div>
 
                     <div class="flex gap-4">
@@ -460,7 +460,7 @@
                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
                             Download PDF
                         </button>
-                        <button class="px-8 py-5 border-2 border-slate-100 text-slate-400 font-black text-sm rounded-2xl hover:bg-slate-50 transition-all">Print</button>
+                        <button class="px-8 py-5 border-2 border-slate-100 dark:border-slate-800 text-slate-400 dark:text-slate-500 font-black text-sm rounded-2xl hover:bg-slate-50 dark:hover:bg-slate-800 transition-all">Print</button>
                     </div>
                 </div>
             </div>
@@ -470,33 +470,33 @@
 
     <!-- Modals -->
     <x-modal name="add-patient-modal" focusable>
-        <div class="p-10 text-start">
-            <h2 class="text-2xl font-black text-slate-800 mb-8">{{ __('messages.add_new_patient') }}</h2>
+        <div class="p-10 text-start bg-white dark:bg-slate-900">
+            <h2 class="text-2xl font-black text-slate-800 dark:text-white mb-8">{{ __('messages.add_new_patient') }}</h2>
             <form action="{{ route('register') }}" method="POST" class="space-y-6">
                 @csrf
                 <input type="hidden" name="role" value="patient">
                 <div class="space-y-2">
-                    <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.full_name') }}</label>
-                    <input type="text" name="name" required class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold">
+                    <label class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{{ __('messages.full_name') }}</label>
+                    <input type="text" name="name" required class="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 font-bold text-slate-700 dark:text-slate-200">
                 </div>
                 <div class="grid grid-cols-2 gap-6">
                     <div class="space-y-2">
-                        <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.age') }}</label>
-                        <input type="number" name="age" required class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold">
+                        <label class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{{ __('messages.age') }}</label>
+                        <input type="number" name="age" required class="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 font-bold text-slate-700 dark:text-slate-200">
                     </div>
                     <div class="space-y-2">
-                        <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.contact') }}</label>
-                        <input type="text" name="phone" class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold">
+                        <label class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{{ __('messages.contact') }}</label>
+                        <input type="text" name="phone" class="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 font-bold text-slate-700 dark:text-slate-200">
                     </div>
                 </div>
                 <div class="space-y-2">
-                    <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.email') }}</label>
-                    <input type="email" name="email" required class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold">
+                    <label class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest">{{ __('messages.email') }}</label>
+                    <input type="email" name="email" required class="w-full bg-slate-50 dark:bg-slate-800 border-none rounded-2xl p-4 font-bold text-slate-700 dark:text-slate-200">
                 </div>
                 <input type="hidden" name="password" value="password">
                 <input type="hidden" name="password_confirmation" value="password">
                 <div class="flex justify-end gap-4 mt-10">
-                    <button type="button" x-on:click="$dispatch('close')" class="px-8 py-4 bg-slate-100 text-slate-400 font-black rounded-2xl">{{ __('messages.cancel') }}</button>
+                    <button type="button" x-on:click="$dispatch('close')" class="px-8 py-4 bg-slate-100 dark:bg-slate-800 text-slate-400 dark:text-slate-500 font-black rounded-2xl">{{ __('messages.cancel') }}</button>
                     <button type="submit" class="px-8 py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100">{{ __('messages.register_patient') }}</button>
                 </div>
             </form>

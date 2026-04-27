@@ -1,4 +1,4 @@
-<header class="bg-white/80 backdrop-blur-md sticky top-0 z-30 px-8 py-5 flex justify-between items-center">
+<header class="bg-white/80 dark:bg-slate-900/80 backdrop-blur-md sticky top-0 z-30 px-8 py-5 flex justify-between items-center transition-colors duration-300">
     <!-- Left: Page Title -->
     <div class="flex items-center gap-6">
         <!-- Mobile Sidebar Toggle (Visible on mobile) -->
@@ -7,7 +7,7 @@
         </button>
         
         <div>
-            <h2 class="text-2xl font-black text-slate-800 tracking-tight">@yield('title', 'Overview')</h2>
+            <h2 class="text-2xl font-black text-slate-800 dark:text-white tracking-tight">@yield('title', 'Overview')</h2>
             <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mt-1">{{ date('l, d M Y') }}</p>
         </div>
     </div>
@@ -19,7 +19,7 @@
             <span class="absolute inset-y-0 start-0 ps-4 flex items-center text-slate-400 group-focus-within:text-emerald-500 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </span>
-            <input type="text" placeholder="{{ __('messages.search') }}" class="bg-slate-100/50 border-none rounded-2xl py-3 ps-12 pe-6 text-sm font-bold text-slate-600 focus:ring-4 focus:ring-emerald-500/10 focus:bg-white transition-all w-64">
+            <input type="text" placeholder="{{ __('messages.search') }}" class="bg-slate-100/50 dark:bg-slate-800/50 border-none rounded-2xl py-3 ps-12 pe-6 text-sm font-bold text-slate-600 dark:text-slate-300 focus:ring-4 focus:ring-emerald-500/10 focus:bg-white dark:focus:bg-slate-900 transition-all w-64">
         </div>
 
         <!-- Notifications Dropdown -->
@@ -38,21 +38,21 @@
                  x-transition:enter="transition ease-out duration-200"
                  x-transition:enter-start="opacity-0 translate-y-4"
                  x-transition:enter-end="opacity-100 translate-y-0"
-                 class="absolute end-0 mt-4 w-80 bg-white rounded-[2rem] shadow-2xl border border-slate-100 py-6 z-50 overflow-hidden"
+                 class="absolute end-0 mt-4 w-80 bg-white dark:bg-slate-900 rounded-[2rem] shadow-2xl border border-slate-100 dark:border-slate-800 py-6 z-50 overflow-hidden"
                  x-cloak>
                 <div class="px-6 mb-4 flex justify-between items-center">
-                    <h3 class="text-sm font-black text-slate-800 tracking-tight">{{ __('messages.notifications') }}</h3>
-                    <span class="text-[10px] font-black bg-emerald-50 text-emerald-600 px-2.5 py-1 rounded-lg uppercase">{{ __('messages.unread') ?? 'Unread' }}</span>
+                    <h3 class="text-sm font-black text-slate-800 dark:text-white tracking-tight">{{ __('messages.notifications') }}</h3>
+                    <span class="text-[10px] font-black bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600 px-2.5 py-1 rounded-lg uppercase">{{ __('messages.unread') ?? 'Unread' }}</span>
                 </div>
 
                 <div class="max-h-96 overflow-y-auto custom-scrollbar">
                     @forelse(auth()->user()->unreadNotifications as $notification)
-                        <a href="{{ route('notifications.mark-as-read', $notification->id) }}" class="flex gap-4 px-6 py-4 hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-0 group">
-                            <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform flex-shrink-0">
+                        <a href="{{ route('notifications.mark-as-read', $notification->id) }}" class="flex gap-4 px-6 py-4 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors border-b border-slate-50 dark:border-slate-800 last:border-0 group">
+                            <div class="w-10 h-10 bg-emerald-50 dark:bg-emerald-900/20 rounded-xl flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform flex-shrink-0">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
                             </div>
                             <div>
-                                <p class="text-xs font-black text-slate-800 leading-tight mb-1">{{ $notification->data['patient_name'] }} booked a {{ $notification->data['service'] }}</p>
+                                <p class="text-xs font-black text-slate-800 dark:text-slate-200 leading-tight mb-1">{{ $notification->data['patient_name'] }} booked a {{ $notification->data['service'] }}</p>
                                 <p class="text-[10px] font-bold text-slate-400 italic mb-2">{{ $notification->data['appointment_date'] }}</p>
                                 <p class="text-[9px] font-black text-emerald-500 uppercase tracking-widest">{{ $notification->created_at->diffForHumans() }}</p>
                             </div>
@@ -80,8 +80,8 @@
             <x-slot name="trigger">
                 <button class="flex items-center gap-4 group focus:outline-none">
                     <div class="text-end hidden sm:block">
-                        <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">{{ Auth::user()->role === 'doctor' ? __('messages.clinic_admin') : __('messages.patient') }}</p>
-                        <p class="text-sm font-black text-slate-800 group-hover:text-emerald-600 transition-colors">{{ Auth::user()->name }}</p>
+                        <p class="text-[10px] font-black text-slate-300 dark:text-slate-500 uppercase tracking-widest leading-none mb-1">{{ Auth::user()->role === 'doctor' ? __('messages.clinic_admin') : __('messages.patient') }}</p>
+                        <p class="text-sm font-black text-slate-800 dark:text-slate-200 group-hover:text-emerald-600 transition-colors">{{ Auth::user()->name }}</p>
                     </div>
                     <div class="w-11 h-11 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 font-black shadow-sm group-hover:scale-105 transition-all">
                         {{ substr(Auth::user()->name, 0, 1) }}
@@ -90,9 +90,9 @@
             </x-slot>
 
             <x-slot name="content">
-                <div class="px-4 py-3 border-b border-slate-50">
+                <div class="px-4 py-3 border-b border-slate-50 dark:border-slate-800">
                     <p class="text-xs font-bold text-slate-400 mb-1">{{ __('messages.logged_in_as') }}</p>
-                    <p class="text-sm font-black text-slate-800 truncate">{{ Auth::user()->email }}</p>
+                    <p class="text-sm font-black text-slate-800 dark:text-slate-200 truncate">{{ Auth::user()->email }}</p>
                 </div>
                 
                 <x-dropdown-link :href="route('profile.edit')" class="font-bold text-slate-600 py-3 flex items-center gap-2">
