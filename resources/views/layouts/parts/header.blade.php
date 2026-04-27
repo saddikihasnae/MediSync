@@ -16,17 +16,62 @@
     <div class="flex items-center gap-8">
         <!-- Search Bar (Desktop) -->
         <div class="hidden md:flex relative group">
-            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-slate-400 group-focus-within:text-emerald-500 transition-colors">
+            <span class="absolute inset-y-0 start-0 ps-4 flex items-center text-slate-400 group-focus-within:text-emerald-500 transition-colors">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </span>
-            <input type="text" placeholder="{{ __('messages.search') }}" class="bg-slate-100/50 border-none rounded-2xl py-3 pl-12 pr-6 text-sm font-bold text-slate-600 focus:ring-4 focus:ring-emerald-500/10 focus:bg-white transition-all w-64">
+            <input type="text" placeholder="{{ __('messages.search') }}" class="bg-slate-100/50 border-none rounded-2xl py-3 ps-12 pe-6 text-sm font-bold text-slate-600 focus:ring-4 focus:ring-emerald-500/10 focus:bg-white transition-all w-64">
         </div>
 
-        <!-- Notifications -->
-        <button class="relative p-2.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-2xl transition-all group">
-            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-            <span class="absolute top-2.5 right-2.5 w-2.5 h-2.5 bg-rose-500 border-2 border-white rounded-full"></span>
-        </button>
+        <!-- Notifications Dropdown -->
+        <div x-data="{ open: false }" class="relative">
+            <button @click="open = !open" @click.away="open = false" class="relative p-2.5 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-2xl transition-all group">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                @if(auth()->user()->unreadNotifications->count() > 0)
+                    <span class="absolute top-2.5 right-2.5 w-4 h-4 bg-rose-500 border-2 border-white rounded-full text-[8px] flex items-center justify-center text-white font-black">
+                        {{ auth()->user()->unreadNotifications->count() }}
+                    </span>
+                @endif
+            </button>
+
+            <!-- Notifications List -->
+            <div x-show="open" 
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 translate-y-4"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 class="absolute end-0 mt-4 w-80 bg-white rounded-[2rem] shadow-2xl border border-slate-100 py-6 z-50 overflow-hidden"
+                 x-cloak>
+                <div class="px-6 mb-4 flex justify-between items-center">
+                    <h3 class="text-sm font-black text-slate-800 tracking-tight">{{ __('messages.notifications') }}</h3>
+                    <span class="text-[10px] font-black bg-emerald-50 text-emerald-600 px-2.5 py-1 rounded-lg uppercase">{{ __('messages.unread') ?? 'Unread' }}</span>
+                </div>
+
+                <div class="max-h-96 overflow-y-auto custom-scrollbar">
+                    @forelse(auth()->user()->unreadNotifications as $notification)
+                        <a href="{{ route('notifications.mark-as-read', $notification->id) }}" class="flex gap-4 px-6 py-4 hover:bg-slate-50 transition-colors border-b border-slate-50 last:border-0 group">
+                            <div class="w-10 h-10 bg-emerald-50 rounded-xl flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform flex-shrink-0">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                            </div>
+                            <div>
+                                <p class="text-xs font-black text-slate-800 leading-tight mb-1">{{ $notification->data['patient_name'] }} booked a {{ $notification->data['service'] }}</p>
+                                <p class="text-[10px] font-bold text-slate-400 italic mb-2">{{ $notification->data['appointment_date'] }}</p>
+                                <p class="text-[9px] font-black text-emerald-500 uppercase tracking-widest">{{ $notification->created_at->diffForHumans() }}</p>
+                            </div>
+                        </a>
+                    @empty
+                        <div class="px-6 py-10 text-center">
+                            <div class="w-16 h-16 bg-slate-50 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <svg class="w-8 h-8 text-slate-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
+                            </div>
+                            <p class="text-xs font-bold text-slate-400">{{ __('messages.all_caught_up') ?? 'All caught up!' }}</p>
+                        </div>
+                    @endforelse
+                </div>
+
+                <div class="px-6 pt-4 mt-2 border-t border-slate-50">
+                    <a href="{{ route('appointments.index') }}" class="block text-center text-[10px] font-black text-emerald-600 hover:text-emerald-700 uppercase tracking-[0.2em] transition-colors">{{ __('messages.view_all_schedule') ?? 'View All Schedule' }}</a>
+                </div>
+            </div>
+        </div>
 
         <div class="h-8 w-px bg-slate-100"></div>
 
@@ -35,7 +80,7 @@
             <x-slot name="trigger">
                 <button class="flex items-center gap-4 group focus:outline-none">
                     <div class="text-end hidden sm:block">
-                        <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">{{ Auth::user()->role === 'doctor' ? 'Clinic Admin' : 'Patient' }}</p>
+                        <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest leading-none mb-1">{{ Auth::user()->role === 'doctor' ? __('messages.clinic_admin') : __('messages.patient') }}</p>
                         <p class="text-sm font-black text-slate-800 group-hover:text-emerald-600 transition-colors">{{ Auth::user()->name }}</p>
                     </div>
                     <div class="w-11 h-11 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-emerald-600 font-black shadow-sm group-hover:scale-105 transition-all">
@@ -46,7 +91,7 @@
 
             <x-slot name="content">
                 <div class="px-4 py-3 border-b border-slate-50">
-                    <p class="text-xs font-bold text-slate-400 mb-1">Logged in as</p>
+                    <p class="text-xs font-bold text-slate-400 mb-1">{{ __('messages.logged_in_as') }}</p>
                     <p class="text-sm font-black text-slate-800 truncate">{{ Auth::user()->email }}</p>
                 </div>
                 

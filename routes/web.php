@@ -39,8 +39,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/book-appointment', [\App\Http\Controllers\PatientAppointmentController::class, 'create'])->name('patient.book');
     Route::post('/book-appointment', [\App\Http\Controllers\PatientAppointmentController::class, 'store'])->name('patient.book.store');
 
-    Route::post('/dashboard/complete-diagnosis/{appointment}', [DashboardController::class, 'completeDiagnosis'])->name('dashboard.complete-diagnosis');
+    Route::post('/diagnose/store', [DashboardController::class, 'storeDiagnosis'])->name('diagnose.store');
     Route::get('/medical-reports/{report}/download', [DashboardController::class, 'downloadReport'])->name('medical-reports.download');
+    
+    Route::get('/settings', [\App\Http\Controllers\SettingsController::class, 'index'])->name('settings.index');
+    Route::patch('/settings/profile', [\App\Http\Controllers\SettingsController::class, 'updateProfile'])->name('settings.profile.update');
+    Route::patch('/settings/password', [\App\Http\Controllers\SettingsController::class, 'updatePassword'])->name('settings.password.update');
+    Route::patch('/settings/clinic', [\App\Http\Controllers\SettingsController::class, 'updateClinic'])->name('settings.clinic.update');
+
+    Route::get('/notifications/{id}/mark-as-read', [DashboardController::class, 'markNotificationAsRead'])->name('notifications.mark-as-read');
 });
 
 require __DIR__.'/auth.php';

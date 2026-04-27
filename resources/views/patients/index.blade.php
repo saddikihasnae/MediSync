@@ -51,7 +51,7 @@
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                 </div>
                 <div>
-                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">New This Month</p>
+                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">{{ __('messages.new_this_month') }}</p>
                     <h3 class="text-3xl font-black text-slate-800 tracking-tighter">{{ $stats['new_this_month'] }}</h3>
                 </div>
             </div>
@@ -60,7 +60,7 @@
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                 </div>
                 <div>
-                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">Active Cases</p>
+                    <p class="text-xs font-black text-slate-400 uppercase tracking-widest mb-1">{{ __('messages.active_cases') }}</p>
                     <h3 class="text-3xl font-black text-slate-800 tracking-tighter">{{ $stats['active_cases'] }}</h3>
                 </div>
             </div>
@@ -70,13 +70,13 @@
         <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
             <div class="p-8 border-b border-slate-50 flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="relative w-full md:w-96">
-                    <input type="text" x-model="searchQuery" @input.debounce.300ms="searchPatients()" placeholder="Search patient by name or phone..." 
-                           class="w-full pl-12 pr-4 py-3 bg-slate-50 border-none rounded-2xl focus:ring-4 focus:ring-emerald-100 transition-all font-bold text-slate-700">
-                    <svg class="w-5 h-5 absolute left-4 top-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <input type="text" x-model="searchQuery" @input.debounce.300ms="searchPatients()" placeholder="{{ __('messages.search_patient') }}" 
+                           class="w-full ps-12 pe-4 py-3 bg-slate-50 border-none rounded-2xl focus:ring-4 focus:ring-emerald-100 transition-all font-bold text-slate-700">
+                    <svg class="w-5 h-5 absolute start-4 top-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
                 <button @click="showAddModal = true" class="w-full md:w-auto px-8 py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100 hover:bg-indigo-700 transition-all flex items-center justify-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                    Add New Patient
+                    {{ __('messages.add_new_patient') }}
                 </button>
             </div>
 
@@ -84,11 +84,11 @@
                 <table class="w-full">
                     <thead class="bg-slate-50/50">
                         <tr>
-                            <th class="px-8 py-5 text-start text-[10px] font-black text-slate-400 uppercase tracking-widest">Patient ID</th>
-                            <th class="px-8 py-5 text-start text-[10px] font-black text-slate-400 uppercase tracking-widest">Name</th>
-                            <th class="px-8 py-5 text-start text-[10px] font-black text-slate-400 uppercase tracking-widest">Contact</th>
-                            <th class="px-8 py-5 text-start text-[10px] font-black text-slate-400 uppercase tracking-widest">Status</th>
-                            <th class="px-8 py-5 text-end text-[10px] font-black text-slate-400 uppercase tracking-widest">Actions</th>
+                            <th class="px-8 py-5 text-start text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ __('messages.patient_id') }}</th>
+                            <th class="px-8 py-5 text-start text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ __('messages.name') }}</th>
+                            <th class="px-8 py-5 text-start text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ __('messages.contact') }}</th>
+                            <th class="px-8 py-5 text-start text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ __('messages.status') }}</th>
+                            <th class="px-8 py-5 text-end text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ __('messages.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-slate-50">
@@ -117,7 +117,8 @@
                                         'bg-emerald-50 text-emerald-600 border-emerald-100': p.status === 'Stable',
                                         'bg-amber-50 text-amber-600 border-amber-100': p.status === 'Under Treatment',
                                         'bg-blue-50 text-emerald-600 border-blue-100': p.status === 'Recovered'
-                                    }" class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border" x-text="p.status"></span>
+                                    }" class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border" 
+                                    x-text="p.status === 'Stable' ? '{{ __('messages.stable') }}' : (p.status === 'Under Treatment' ? '{{ __('messages.under_treatment') }}' : '{{ __('messages.recovered') }}')"></span>
                                 </td>
                                 <td class="px-8 py-6 text-end">
                                     <div class="flex justify-end gap-2">
@@ -159,22 +160,22 @@
                         
                         <div class="grid grid-cols-2 gap-4 mb-10">
                             <div class="bg-slate-50 p-4 rounded-2xl">
-                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Blood Group</p>
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{{ __('messages.blood_group') }}</p>
                                 <p class="text-sm font-black text-slate-800" x-text="selectedPatient.blood_group || 'N/A'"></p>
                             </div>
                             <div class="bg-slate-50 p-4 rounded-2xl">
-                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">Last Visit</p>
-                                <p class="text-sm font-black text-slate-800" x-text="selectedPatient.last_visit ? new Date(selectedPatient.last_visit).toLocaleDateString() : 'Never'"></p>
+                                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">{{ __('messages.last_visit') }}</p>
+                                <p class="text-sm font-black text-slate-800" x-text="selectedPatient.last_visit ? new Date(selectedPatient.last_visit).toLocaleDateString() : '{{ __('messages.never') ?? 'Never' }}'"></p>
                             </div>
                         </div>
 
                         <div class="flex flex-col gap-3">
                             <button @click="openEdit()" class="w-full py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100 flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-5M16.123 3.897a2.25 2.25 0 113.182 3.182L12 14.25l-3.5 1 1-3.5 7.623-7.623z"></path></svg>
-                                Edit Patient Info
+                                {{ __('messages.edit_patient') }}
                             </button>
                             <button @click="openDelete()" class="w-full py-4 bg-rose-50 text-rose-600 font-black rounded-2xl hover:bg-rose-600 hover:text-white transition-all">
-                                Delete Patient Account
+                                {{ __('messages.delete_patient') }}
                             </button>
                         </div>
                     </div>
@@ -193,33 +194,33 @@
                     <template x-if="showEditModal"><input type="hidden" name="_method" value="PUT"></template>
                     
                     <div class="space-y-2">
-                        <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Full Name</label>
+                        <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.full_name') }}</label>
                         <input type="text" name="name" x-model="selectedPatient.name" required class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700">
                     </div>
                     <div class="grid grid-cols-2 gap-6">
                         <div class="space-y-2">
-                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Email</label>
+                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.email') }}</label>
                             <input type="email" name="email" x-model="selectedPatient.email" :required="!showEditModal" :disabled="showEditModal" class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700 disabled:opacity-50">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Phone</label>
+                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.contact') }}</label>
                             <input type="text" name="phone" x-model="selectedPatient.phone" class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700">
                         </div>
                     </div>
                     <div class="grid grid-cols-3 gap-6">
                         <div class="space-y-2">
-                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Age</label>
+                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.age') }}</label>
                             <input type="number" name="age" x-model="selectedPatient.age" required class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700">
                         </div>
                         <div class="space-y-2">
-                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Gender</label>
+                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.gender') }}</label>
                             <select name="gender" x-model="selectedPatient.gender" class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700">
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
+                                <option value="Male">{{ __('messages.male') }}</option>
+                                <option value="Female">{{ __('messages.female') }}</option>
                             </select>
                         </div>
                         <div class="space-y-2">
-                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Blood Group</label>
+                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.blood_group') }}</label>
                             <select name="blood_group" x-model="selectedPatient.blood_group" class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700">
                                 <option value="A+">A+</option>
                                 <option value="A-">A-</option>
@@ -233,16 +234,16 @@
                         </div>
                     </div>
                     <div class="space-y-2">
-                        <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Status</label>
+                        <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.status') }}</label>
                         <select name="status" x-model="selectedPatient.status" class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700">
-                            <option value="Stable">Stable</option>
-                            <option value="Under Treatment">Under Treatment</option>
-                            <option value="Recovered">Recovered</option>
+                            <option value="Stable">{{ __('messages.stable') }}</option>
+                            <option value="Under Treatment">{{ __('messages.under_treatment') }}</option>
+                            <option value="Recovered">{{ __('messages.recovered') }}</option>
                         </select>
                     </div>
                     <div class="flex justify-end gap-4 mt-10">
-                        <button type="button" @click="showAddModal = false; showEditModal = false" class="px-8 py-4 bg-slate-100 text-slate-400 font-black rounded-2xl">Cancel</button>
-                        <button type="submit" class="px-8 py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100" x-text="showEditModal ? 'Save Changes' : 'Register Patient'"></button>
+                        <button type="button" @click="showAddModal = false; showEditModal = false" class="px-8 py-4 bg-slate-100 text-slate-400 font-black rounded-2xl">{{ __('messages.cancel') }}</button>
+                        <button type="submit" class="px-8 py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100" x-text="showEditModal ? '{{ __('messages.save_changes') }}' : '{{ __('messages.register_patient') }}'"></button>
                     </div>
                 </form>
             </div>
@@ -256,14 +257,14 @@
                 <div class="w-16 h-16 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center mx-auto mb-6">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                 </div>
-                <h3 class="text-xl font-black text-slate-800 mb-2">Delete Patient Record?</h3>
-                <p class="text-sm text-slate-400 font-bold mb-10 leading-relaxed">Are you sure you want to delete <span class="text-slate-800" x-text="selectedPatient?.name"></span>? This action is permanent.</p>
+                <h3 class="text-xl font-black text-slate-800 mb-2">{{ __('messages.delete_patient') }}</h3>
+                <p class="text-sm text-slate-400 font-bold mb-10 leading-relaxed">{{ __('messages.confirm_delete_patient') }}</p>
                 <form :action="'{{ url('patients') }}/' + selectedPatient?.id" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="flex flex-col gap-3">
-                        <button type="submit" class="w-full py-4 bg-rose-600 text-white font-black rounded-2xl shadow-xl shadow-rose-100 hover:bg-rose-700 transition-all uppercase tracking-widest text-xs">Yes, Delete Data</button>
-                        <button type="button" @click="showDeleteModal = false" class="w-full py-4 bg-slate-100 text-slate-400 font-black rounded-2xl transition-all uppercase tracking-widest text-xs">No, Keep it</button>
+                        <button type="submit" class="w-full py-4 bg-rose-600 text-white font-black rounded-2xl shadow-xl shadow-rose-100 hover:bg-rose-700 transition-all uppercase tracking-widest text-xs">{{ __('messages.delete') }}</button>
+                        <button type="button" @click="showDeleteModal = false" class="w-full py-4 bg-slate-100 text-slate-400 font-black rounded-2xl transition-all uppercase tracking-widest text-xs">{{ __('messages.cancel') }}</button>
                     </div>
                 </form>
             </div>

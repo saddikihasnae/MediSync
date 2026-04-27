@@ -1,14 +1,14 @@
 <aside x-data="{ open: false }" class="z-50">
     <!-- Mobile Toggle -->
-    <div class="lg:hidden fixed bottom-6 right-6 z-50">
+    <div class="lg:hidden fixed bottom-6 end-6 z-50">
         <button @click="open = !open" class="p-4 bg-emerald-600 text-white rounded-full shadow-2xl">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
         </button>
     </div>
 
     <!-- Sidebar Container -->
-    <div :class="open ? 'translate-x-0' : '-translate-x-full lg:translate-x-0'" 
-         class="fixed inset-y-0 left-0 w-72 m-6 bg-slate-900 rounded-[2.5rem] shadow-2xl transition-transform duration-300 ease-in-out flex flex-col overflow-hidden border border-slate-800">
+    <div :class="open ? 'translate-x-0' : (document.dir === 'rtl' ? 'translate-x-full lg:translate-x-0' : '-translate-x-full lg:translate-x-0')" 
+         class="fixed inset-y-0 start-0 w-72 m-6 bg-slate-900 rounded-[2.5rem] shadow-2xl transition-transform duration-300 ease-in-out flex flex-col overflow-hidden border border-slate-800">
         
         <!-- Logo Section -->
         <div class="p-8">
@@ -51,6 +51,12 @@
                     {{ __('messages.book_appointment') }}
                 </x-sidebar-link>
             @endif
+
+            <div class="pt-4 mt-4 border-t border-slate-800/50">
+                <x-sidebar-link :href="route('settings.index')" :active="request()->routeIs('settings.*')" icon="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+                    {{ __('messages.settings') }}
+                </x-sidebar-link>
+            </div>
         </nav>
 
         <!-- User Profile Bottom Section -->

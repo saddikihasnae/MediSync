@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Models\Service;
 use App\Models\User;
+use App\Notifications\NewAppointmentNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -46,13 +47,18 @@ class AppointmentController extends Controller
 
         $doctor = User::where('role', 'doctor')->first();
 
-        Appointment::create([
+        $appointment = Appointment::create([
             'patient_id' => $validated['patient_id'],
             'doctor_id' => $doctor->id,
             'service_id' => $validated['service_id'],
             'appointment_date' => $validated['appointment_date'],
             'status' => 'pending',
         ]);
+
+        // Notify the doctor
+        if ($doctor) {
+            $doctor->notify(new NewAppointmentNotification($appointment));
+        }
 
         return redirect()->route('appointments.index')->with('success', __('messages.appointment_created'));
     }

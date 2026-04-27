@@ -27,7 +27,7 @@
         <div class="mb-10 flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
                 <h1 class="text-3xl font-black text-slate-800 tracking-tight">{{ __('messages.services') }}</h1>
-                <p class="text-sm text-slate-400 font-bold uppercase tracking-widest mt-1">Management Console</p>
+                <p class="text-sm text-slate-400 font-bold uppercase tracking-widest mt-1">{{ __('messages.management_console') ?? 'Management Console' }}</p>
             </div>
             
             <button @click="openAdd()" class="w-full md:w-auto px-8 py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100 hover:bg-indigo-700 transition-all flex items-center justify-center gap-2">
@@ -48,7 +48,7 @@
             @forelse($services as $service)
             <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 relative group hover:shadow-xl transition-all duration-500 overflow-hidden">
                 <!-- Decorative Icon Background -->
-                <div class="absolute -right-4 -top-4 w-24 h-24 bg-emerald-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700"></div>
+                <div class="absolute -end-4 -top-4 w-24 h-24 bg-emerald-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700"></div>
                 
                 <div class="relative z-10 h-full flex flex-col">
                     <div class="flex justify-between items-start mb-6">
@@ -78,7 +78,7 @@
                     <div class="flex items-center justify-between border-t border-slate-50 pt-6 mt-auto">
                         <div class="bg-emerald-50 px-4 py-2 rounded-xl border border-emerald-100 flex items-center gap-2">
                             <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                            <span class="text-[10px] font-black text-indigo-700 uppercase tracking-tighter">Active</span>
+                            <span class="text-[10px] font-black text-emerald-700 uppercase tracking-tighter">{{ __('messages.active') ?? 'Active' }}</span>
                         </div>
                         <div class="text-end">
                             <p class="text-[10px] font-black text-slate-300 uppercase tracking-widest mb-0.5">{{ __('messages.price') }}</p>
@@ -89,7 +89,7 @@
             </div>
             @empty
             <div class="col-span-full py-20 text-center">
-                <p class="text-slate-400 font-bold">No services found. Start by adding one!</p>
+                <p class="text-slate-400 font-bold">{{ __('messages.no_services_found') ?? 'No services found. Start by adding one!' }}</p>
             </div>
             @endforelse
         </div>
@@ -142,14 +142,14 @@
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
                 </div>
                 <h3 class="text-xl font-black text-slate-800 mb-2">{{ __('messages.confirm_delete_msg') }}</h3>
-                <p class="text-sm text-slate-400 font-bold mb-10 leading-relaxed" x-text="'Delete service: ' + selectedService.name"></p>
+                <p class="text-sm text-slate-400 font-bold mb-10 leading-relaxed" x-text="'{{ __('messages.delete') }}: ' + selectedService.name"></p>
                 
                 <form :action="'{{ url('services') }}/' + selectedService.id" method="POST">
                     @csrf
                     @method('DELETE')
                     <div class="flex flex-col gap-3">
-                        <button type="submit" class="w-full py-4 bg-rose-600 text-white font-black rounded-2xl shadow-xl shadow-rose-100 hover:bg-rose-700 transition-all uppercase tracking-widest text-xs">Yes, Delete Service</button>
-                        <button type="button" @click="showDeleteConfirm = false" class="w-full py-4 bg-slate-100 text-slate-400 font-black rounded-2xl transition-all uppercase tracking-widest text-xs">No, Keep it</button>
+                        <button type="submit" class="w-full py-4 bg-rose-600 text-white font-black rounded-2xl shadow-xl shadow-rose-100 hover:bg-rose-700 transition-all uppercase tracking-widest text-xs">{{ __('messages.delete') }}</button>
+                        <button type="button" @click="showDeleteConfirm = false" class="w-full py-4 bg-slate-100 text-slate-400 font-black rounded-2xl transition-all uppercase tracking-widest text-xs">{{ __('messages.cancel') }}</button>
                     </div>
                 </form>
             </div>

@@ -6,6 +6,7 @@ use App\Mail\AppointmentConfirmed;
 use App\Models\Appointment;
 use App\Models\Service;
 use App\Models\User;
+use App\Notifications\NewAppointmentNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 
@@ -42,6 +43,11 @@ class PatientAppointmentController extends Controller
             'status' => 'pending',
             'notes' => $validated['notes'],
         ]);
+
+        // Notify the doctor
+        if ($doctor) {
+            $doctor->notify(new NewAppointmentNotification($appointment));
+        }
 
         // Send confirmation email
         try {

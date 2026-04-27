@@ -59,6 +59,12 @@ class DashboardController extends Controller
         // Append all parameters to maintain filter and tab state during pagination
         $medicalReports->appends($request->all());
 
+        // Dynamic Report Types for filtering
+        $reportTypes = MedicalReport::select('type')->distinct()->pluck('type');
+
+        // All services for dynamic dropdowns
+        $services = Service::all();
+
         $patients = User::where('role', 'patient')->latest()->paginate(8, ['*'], 'patients_page');
         $patients->appends($request->all());
 
@@ -73,7 +79,9 @@ class DashboardController extends Controller
             'latestVisits', 
             'medicalReports', 
             'patients', 
-            'pendingAppointments'
+            'pendingAppointments',
+            'reportTypes',
+            'services'
         ));
     }
 
@@ -115,21 +123,34 @@ class DashboardController extends Controller
     }
 
     /**
-     * Complete a diagnosis and update appointment status.
+     * Store a new diagnosis and create a medical report.
      */
-    public function completeDiagnosis(Request $request, Appointment $appointment)
+    public function storeDiagnosis(Request $request)
     {
         $request->validate([
-            'diagnosis' => 'required|string',
+            'appointment_id' => 'required|exists:appointments,id',
+            'visit_category' => 'required|string',
+            'symptoms' => 'required|string',
             'prescription' => 'nullable|string',
         ]);
 
-        $appointment->update([
-            'status' => 'completed',
-            'notes' => $request->diagnosis . "\n\nPrescription: " . $request->prescription,
+        $appointment = Appointment::findOrFail($request->appointment_id);
+
+        // 1. Create Medical Report
+        MedicalReport::create([
+            'report_id' => 'REP-' . rand(1000, 9999),
+            'patient_id' => $appointment->patient_id,
+            'type' => $request->visit_category,
+            'report_date' => now(),
+            'result_summary' => "Symptoms: " . $request->symptoms . "\n\nPrescription: " . $request->prescription,
         ]);
 
-        return redirect()->back()->with('success', 'Diagnosis saved and appointment completed.');
+        // 2. Update Appointment Status
+        $appointment->update([
+            'status' => 'completed',
+        ]);
+
+        return redirect()->route('dashboard', ['tab' => 'diagnose'])->with('success', 'Consultation saved successfully');
     }
 
     public function downloadReport(MedicalReport $report)
@@ -147,5 +168,13 @@ class DashboardController extends Controller
         return response()->streamDownload(function () use ($content) {
             echo $content;
         }, $fileName);
+    }
+
+    public function markNotificationAsRead($id)
+    {
+        $notification = auth()->user()->notifications()->findOrFail($id);
+        $notification->markAsRead();
+
+        return redirect()->route('appointments.index')->with('success', 'Notification marked as read');
     }
 }
