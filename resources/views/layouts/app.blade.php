@@ -14,28 +14,40 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased bg-gray-50">
-        <div class="flex h-screen overflow-hidden">
+    <body class="font-sans antialiased bg-[#f8fafc]">
+        <div class="flex min-h-screen overflow-x-hidden">
             <!-- Sidebar -->
-            @include('layouts.parts.sidebar')
+            <div class="hidden lg:block w-[340px] flex-shrink-0">
+                @include('layouts.parts.sidebar')
+            </div>
+            
+            <!-- Mobile Sidebar Overlay (Alpine.js handled inside sidebar) -->
+            <div class="lg:hidden">
+                @include('layouts.parts.sidebar')
+            </div>
 
-            <div class="flex flex-col flex-1 overflow-y-auto">
+            <div class="flex-1 flex flex-col min-w-0">
                 <!-- Header -->
                 @include('layouts.parts.header')
 
-                <!-- Page Heading -->
-                @isset($header)
-                    <header class="bg-white shadow-sm">
-                        <div class="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8">
-                            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                                {{ $header }}
-                            </h2>
-                        </div>
-                    </header>
-                @endisset
-
                 <!-- Page Content -->
-                <main class="flex-1 p-6">
+                <main class="flex-1 p-4 md:p-8 lg:p-12">
+                    <!-- Session Feedback -->
+                    @if(session('success'))
+                        <div x-data="{ show: true }" x-show="show" x-init="setTimeout(() => show = false, 5000)" 
+                             class="mb-8 p-4 bg-emerald-50 border border-emerald-100 rounded-3xl flex items-center justify-between shadow-sm">
+                            <div class="flex items-center gap-3">
+                                <div class="w-8 h-8 bg-emerald-500 rounded-xl flex items-center justify-center text-white">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                                </div>
+                                <span class="text-sm font-bold text-emerald-800">{{ session('success') }}</span>
+                            </div>
+                            <button @click="show = false" class="text-emerald-400 hover:text-emerald-600">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                            </button>
+                        </div>
+                    @endif
+
                     {{ $slot }}
                 </main>
 

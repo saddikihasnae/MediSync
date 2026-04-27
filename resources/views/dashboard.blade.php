@@ -1,40 +1,54 @@
 <x-app-layout>
-    <div x-data="{ activeTab: 'overview' }" class="min-h-screen bg-[#f8fafc] px-4 py-6 sm:px-6 lg:px-8">
-        
-        <!-- Header & Top Navigation -->
-        <div class="mb-10">
-            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
-                <div>
-                    <nav class="flex text-xs font-bold text-slate-400 uppercase tracking-widest mb-1 gap-2">
-                        <span class="hover:text-indigo-600 cursor-pointer transition-colors">Pages</span>
-                        <span>/</span>
-                        <span class="text-slate-800">Dashboard</span>
-                    </nav>
-                    <h1 class="text-2xl font-black text-slate-800 tracking-tight">Health Analytics Overview</h1>
-                </div>
-                
-                <div class="flex items-center gap-6 bg-white p-2 rounded-2xl shadow-sm border border-slate-50 w-full md:w-auto">
-                    <div class="relative flex-1 md:w-64">
-                        <input type="text" placeholder="Search data, reports..." class="w-full bg-slate-50 border-none rounded-xl text-sm py-2 pl-10 focus:ring-2 focus:ring-indigo-100 transition-all">
-                        <svg class="w-4 h-4 absolute left-3 top-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                    </div>
-                    <div class="flex items-center gap-3 pr-2">
-                        <button class="p-2 text-slate-400 hover:bg-slate-50 rounded-xl relative transition-all">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"></path></svg>
-                            <span class="absolute top-2 right-2 w-2 h-2 bg-indigo-500 rounded-full border-2 border-white"></span>
-                        </button>
-                        <!-- Avatar removed as requested -->
-                    </div>
-                </div>
-            </div>
+    @section('title', 'Health Analytics Dashboard')
 
-            <!-- Pills Tabs with Alpine.js Logic -->
-            <div class="flex gap-2 p-1 bg-white rounded-2xl shadow-sm border border-slate-100 w-fit">
-                <button @click="activeTab = 'overview'" :class="activeTab === 'overview' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'text-slate-400 hover:bg-slate-50 hover:text-indigo-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">Overview</button>
-                <button @click="activeTab = 'reports'" :class="activeTab === 'reports' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'text-slate-400 hover:bg-slate-50 hover:text-indigo-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">Medical Reports</button>
-                <button @click="activeTab = 'patients'" :class="activeTab === 'patients' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'text-slate-400 hover:bg-slate-50 hover:text-indigo-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">Patients Overview</button>
-                <button @click="activeTab = 'diagnose'" :class="activeTab === 'diagnose' ? 'bg-indigo-600 text-white shadow-lg shadow-indigo-100' : 'text-slate-400 hover:bg-slate-50 hover:text-indigo-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">Diagnose</button>
+    <div x-data="{ 
+        activeTab: '{{ request()->query('tab', 'overview') }}',
+        showReportModal: false,
+        selectedReport: null,
+        showToast: false,
+        toastMessage: '',
+        showFilterDropdown: false,
+        
+        openReport(report) {
+            this.selectedReport = report;
+            this.showReportModal = true;
+        },
+        
+        triggerDownload(url) {
+            this.toastMessage = 'Downloading report...';
+            this.showToast = true;
+            
+            // Redirect to the download route
+            if (url) {
+                window.location.href = url;
+            }
+            
+            setTimeout(() => { this.showToast = false; }, 3000);
+        }
+    }" class="min-h-screen relative">
+        
+        <!-- Toast Notification -->
+        <div x-show="showToast" 
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 translate-y-10"
+             x-transition:enter-end="opacity-100 translate-y-0"
+             x-transition:leave="transition ease-in duration-300"
+             x-transition:leave-start="opacity-100 translate-y-0"
+             x-transition:leave-end="opacity-0 translate-y-10"
+             class="fixed bottom-10 right-10 z-[100] flex items-center gap-4 bg-slate-900 text-white px-6 py-4 rounded-2xl shadow-2xl border border-slate-700"
+             x-cloak>
+            <div class="w-8 h-8 bg-emerald-600 rounded-xl flex items-center justify-center animate-bounce">
+                <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
             </div>
+            <p class="font-black text-sm tracking-tight" x-text="toastMessage"></p>
+        </div>
+
+        <!-- Pills Tabs with Alpine.js Logic -->
+        <div class="mb-10 flex gap-2 p-1 bg-white rounded-2xl shadow-sm border border-slate-100 w-fit">
+            <button @click="activeTab = 'overview'" :class="activeTab === 'overview' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' : 'text-slate-400 hover:bg-slate-50 hover:text-emerald-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">Overview</button>
+            <button @click="activeTab = 'reports'" :class="activeTab === 'reports' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' : 'text-slate-400 hover:bg-slate-50 hover:text-emerald-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">Medical Reports</button>
+            <button @click="activeTab = 'patients'" :class="activeTab === 'patients' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' : 'text-slate-400 hover:bg-slate-50 hover:text-emerald-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">Patients Directory</button>
+            <button @click="activeTab = 'diagnose'" :class="activeTab === 'diagnose' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' : 'text-slate-400 hover:bg-slate-50 hover:text-emerald-600'" class="px-6 py-2.5 rounded-xl text-sm font-black transition-all">Diagnose Now</button>
         </div>
 
         <!-- ========================================== -->
@@ -57,7 +71,7 @@
                     </div>
                     <div class="absolute bottom-0 right-0 w-32 h-16 opacity-10 group-hover:opacity-30 transition-opacity">
                         <svg viewBox="0 0 100 40" class="w-full h-full">
-                            <path d="M0 35 Q 20 10, 40 30 T 80 5 T 100 25 V 40 H 0 Z" fill="currentColor" class="text-{{ $stat['color'] }}-600" />
+                            <path d="M0 35 Q 20 10, 40 30 T 80 5 T 100 25 V 40 H 0 Z" fill="currentColor" class="text-emerald-600" />
                         </svg>
                     </div>
                 </div>
@@ -69,8 +83,8 @@
                 <div class="lg:col-span-8 bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100">
                     <div class="flex justify-between items-center mb-8">
                         <div>
-                            <h3 class="text-xl font-black text-slate-800 tracking-tight">Overview Statistics</h3>
-                            <p class="text-sm text-slate-400 font-medium">Monthly revenue and patient flow</p>
+                            <h3 class="text-xl font-black text-slate-800 tracking-tight">Financial Performance</h3>
+                            <p class="text-sm text-slate-400 font-medium">Revenue metrics for the current year</p>
                         </div>
                     </div>
                     <div class="h-80">
@@ -79,8 +93,8 @@
                 </div>
                 <div class="lg:col-span-4 bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100">
                     <div class="mb-8 text-center">
-                        <h3 class="text-xl font-black text-slate-800 tracking-tight">Avg Diagnose</h3>
-                        <p class="text-sm text-slate-400 font-medium">Condition distribution</p>
+                        <h3 class="text-xl font-black text-slate-800 tracking-tight">Clinic Capacity</h3>
+                        <p class="text-sm text-slate-400 font-medium">Resource distribution</p>
                     </div>
                     <div class="h-64 relative flex items-center justify-center">
                         <canvas id="diagnoseChart"></canvas>
@@ -100,12 +114,12 @@
                         <div class="flex justify-between min-w-[800px] relative">
                             @foreach(['08:00', '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00'] as $hour)
                             <div class="relative flex flex-col items-center group">
-                                <div class="w-3 h-3 rounded-full {{ isset($todaySchedule[$hour]) ? 'bg-indigo-600 ring-4 ring-indigo-50 shadow-lg' : 'bg-slate-200' }} mb-4 transition-all z-10"></div>
+                                <div class="w-3 h-3 rounded-full {{ isset($todaySchedule[$hour]) ? 'bg-emerald-600 ring-4 ring-emerald-50 shadow-lg' : 'bg-slate-200' }} mb-4 transition-all z-10"></div>
                                 <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ $hour }}</span>
                                 @if(isset($todaySchedule[$hour]))
                                 <div class="absolute top-16 left-1/2 -translate-x-1/2 w-48 group-hover:scale-105 transition-all">
-                                    <div class="bg-indigo-600/90 backdrop-blur-md p-4 rounded-3xl text-white shadow-xl">
-                                        <p class="text-[10px] font-black uppercase text-indigo-100 mb-1">{{ $todaySchedule[$hour][0]->patient->name }}</p>
+                                    <div class="bg-emerald-600/90 backdrop-blur-md p-4 rounded-3xl text-white shadow-xl">
+                                        <p class="text-[10px] font-black uppercase text-emerald-100 mb-1">{{ $todaySchedule[$hour][0]->patient->name }}</p>
                                         <p class="text-xs font-bold">{{ $todaySchedule[$hour][0]->service->name }}</p>
                                     </div>
                                 </div>
@@ -121,8 +135,8 @@
                         @foreach($latestVisits as $visit)
                         <div class="flex items-center justify-between group">
                             <div class="flex items-center gap-4">
-                                <div class="w-12 h-12 rounded-2xl bg-indigo-50 flex items-center justify-center overflow-hidden border-2 border-white shadow-sm">
-                                    <span class="text-indigo-600 font-black">{{ substr($visit->patient->name, 0, 1) }}</span>
+                                <div class="w-12 h-12 rounded-2xl bg-emerald-50 flex items-center justify-center overflow-hidden border-2 border-white shadow-sm">
+                                    <span class="text-emerald-600 font-black">{{ substr($visit->patient->name, 0, 1) }}</span>
                                 </div>
                                 <div>
                                     <p class="text-sm font-black text-slate-800">{{ $visit->patient->name }}</p>
@@ -140,42 +154,95 @@
         <!-- ========================================== -->
         <!-- TAB 2: MEDICAL REPORTS -->
         <!-- ========================================== -->
-        <div x-show="activeTab === 'reports'" x-cloak x-transition>
-            <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 p-8">
-                <div class="flex justify-between items-center mb-8">
-                    <h3 class="text-2xl font-black text-slate-800">Medical Reports</h3>
-                    <div class="relative w-64">
-                        <input type="text" placeholder="Search by patient..." class="w-full bg-slate-50 border-none rounded-xl text-sm py-2 pl-10 focus:ring-2 focus:ring-indigo-100">
-                        <svg class="w-4 h-4 absolute left-3 top-2.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <div x-show="activeTab === 'reports'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4">
+            <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 overflow-hidden">
+                <div class="p-8 border-b border-slate-50 flex justify-between items-center bg-white relative">
+                    <div>
+                        <h3 class="text-2xl font-black text-slate-800 tracking-tight">Medical Records Directory</h3>
+                        <p class="text-sm text-slate-400 font-bold">Comprehensive history of all diagnostic reports</p>
+                    </div>
+                    
+                    <!-- Filter Dropdown -->
+                    <div class="relative">
+                        <button @click="showFilterDropdown = !showFilterDropdown" class="p-3 bg-slate-50 text-slate-400 rounded-2xl hover:bg-emerald-50 hover:text-emerald-600 transition-all focus:outline-none">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"></path></svg>
+                        </button>
+                        <div x-show="showFilterDropdown" @click.away="showFilterDropdown = false" class="absolute right-0 mt-4 w-60 bg-white rounded-[2rem] shadow-2xl border border-slate-100 z-50 p-3 overflow-hidden flex flex-col gap-1" x-cloak x-transition>
+                            <p class="px-4 py-3 text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] border-b border-slate-50 mb-2 italic">Filter by type</p>
+                            
+                            <a href="{{ route('dashboard', ['tab' => 'reports', 'type' => 'all']) }}" 
+                               class="flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-black transition-all {{ request('type', 'all') == 'all' ? 'bg-emerald-50 text-emerald-600' : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
+                                <span>All Reports</span>
+                                @if(request('type', 'all') == 'all') <div class="w-2 h-2 bg-emerald-500 rounded-full"></div> @endif
+                            </a>
+
+                            @foreach(['Blood Test', 'X-Ray Scan', 'MRI Report', 'General Check'] as $type)
+                            <a href="{{ route('dashboard', ['tab' => 'reports', 'type' => $type]) }}" 
+                               class="flex items-center justify-between px-4 py-3 rounded-2xl text-sm font-black transition-all {{ request('type') == $type ? 'bg-emerald-50 text-emerald-600' : 'text-slate-600 hover:bg-slate-50 hover:text-emerald-600' }}">
+                                <span>{{ $type }}</span>
+                                @if(request('type') == $type) <div class="w-2 h-2 bg-emerald-500 rounded-full"></div> @endif
+                            </a>
+                            @endforeach
+                        </div>
                     </div>
                 </div>
+
                 <div class="overflow-x-auto">
-                    <table class="w-full">
+                    <table class="w-full text-left border-collapse">
                         <thead class="bg-slate-50/50">
                             <tr>
-                                <th class="px-8 py-5 text-start text-xs font-black text-slate-400 uppercase tracking-widest">Report ID</th>
-                                <th class="px-8 py-5 text-start text-xs font-black text-slate-400 uppercase tracking-widest">Patient</th>
-                                <th class="px-8 py-5 text-start text-xs font-black text-slate-400 uppercase tracking-widest">Type</th>
-                                <th class="px-8 py-5 text-start text-xs font-black text-slate-400 uppercase tracking-widest">Date</th>
-                                <th class="px-8 py-5 text-end text-xs font-black text-slate-400 uppercase tracking-widest">Actions</th>
+                                <th class="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest">REPORT ID</th>
+                                <th class="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest">PATIENT</th>
+                                <th class="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest">TYPE</th>
+                                <th class="px-8 py-5 text-xs font-black text-slate-400 uppercase tracking-widest">DATE</th>
+                                <th class="px-8 py-5 text-end text-xs font-black text-slate-400 uppercase tracking-widest">ACTIONS</th>
                             </tr>
                         </thead>
-                        <tbody class="divide-y divide-slate-50">
-                            @foreach($medicalReports as $report)
-                            <tr class="hover:bg-slate-50/50 transition-colors">
-                                <td class="px-8 py-6 text-sm font-bold text-slate-400">#{{ str_pad($report->id, 5, '0', STR_PAD_LEFT) }}</td>
-                                <td class="px-8 py-6 text-sm font-black text-slate-800">{{ $report->patient->name }}</td>
+                        <tbody class="divide-y divide-slate-100">
+                            @forelse($medicalReports as $report)
+                            <tr class="hover:bg-slate-50 transition-all group">
+                                <td class="px-8 py-6 text-sm font-black text-emerald-600 tracking-tight italic">#{{ $report->report_id }}</td>
                                 <td class="px-8 py-6">
-                                    <span class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-blue-50 text-blue-600 border border-blue-100">{{ $report->type }}</span>
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center text-emerald-600 font-black shadow-sm">
+                                            {{ substr($report->patient->name, 0, 2) }}
+                                        </div>
+                                        <span class="text-sm font-black text-slate-700 tracking-tight">{{ $report->patient->name }}</span>
+                                    </div>
                                 </td>
-                                <td class="px-8 py-6 text-sm font-bold text-slate-500">{{ $report->created_at->format('M d, Y') }}</td>
-                                <td class="px-8 py-6 text-end">
-                                    <button class="text-indigo-600 font-black text-xs hover:underline uppercase tracking-widest">View PDF</button>
+                                <td class="px-8 py-6">
+                                    <span class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest bg-emerald-50 text-emerald-600 border border-emerald-100">{{ $report->type }}</span>
+                                </td>
+                                <td class="px-8 py-6 text-sm font-bold text-slate-400">{{ $report->report_date->format('d M, Y') }}</td>
+                                <td class="px-8 py-6 text-end space-x-2">
+                                    <button @click="openReport({
+                                        id: '{{ $report->report_id }}',
+                                        patient: '{{ $report->patient->name }}',
+                                        type: '{{ $report->type }}',
+                                        date: '{{ $report->report_date->format('d M, Y') }}',
+                                        content: '{{ addslashes($report->result_summary) }}',
+                                        download_url: '{{ route('medical-reports.download', $report) }}'
+                                    })" class="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-emerald-600 hover:text-white transition-all shadow-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg></button>
+                                    <button @click="triggerDownload('{{ route('medical-reports.download', $report) }}')" class="p-2.5 bg-slate-50 text-slate-400 rounded-xl hover:bg-emerald-600 hover:text-white transition-all shadow-sm"><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg></button>
                                 </td>
                             </tr>
-                            @endforeach
+                            @empty
+                            <tr>
+                                <td colspan="5" class="py-20 text-center">
+                                    <div class="flex flex-col items-center justify-center opacity-30">
+                                        <svg class="w-16 h-16 mb-4 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                                        <p class="text-xl font-black uppercase tracking-[0.2em] text-slate-400">No diagnostic records found</p>
+                                    </div>
+                                </td>
+                            </tr>
+                            @endforelse
                         </tbody>
                     </table>
+                </div>
+                
+                <!-- Pagination -->
+                <div class="p-8 bg-slate-50/30 border-t border-slate-50">
+                    {{ $medicalReports->appends(['tab' => 'reports', 'patients_page' => $patients->currentPage()])->links('vendor.pagination.tailwind_custom') }}
                 </div>
             </div>
         </div>
@@ -183,89 +250,197 @@
         <!-- ========================================== -->
         <!-- TAB 3: PATIENTS OVERVIEW -->
         <!-- ========================================== -->
-        <div x-show="activeTab === 'patients'" x-cloak x-transition>
+        <div x-show="activeTab === 'patients'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4">
             <div class="flex justify-between items-center mb-8">
-                <h3 class="text-2xl font-black text-slate-800">Patients Directory</h3>
-                <button @click="$dispatch('open-modal', 'add-patient-modal')" class="bg-indigo-600 text-white px-8 py-3 rounded-2xl font-black text-sm shadow-xl shadow-indigo-100 hover:scale-105 transition-all">Add New Patient</button>
+                <div>
+                    <h3 class="text-2xl font-black text-slate-800 tracking-tight">Patients Directory</h3>
+                    <p class="text-sm text-slate-400 font-bold uppercase tracking-widest mt-1">Manage profiles and history</p>
+                </div>
+                <button @click="$dispatch('open-modal', 'add-patient-modal')" class="bg-emerald-600 text-white px-8 py-4 rounded-[2rem] font-black text-sm shadow-xl shadow-emerald-100 hover:scale-105 active:scale-95 transition-all flex items-center gap-3">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"></path></svg>
+                    Add New Patient
+                </button>
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
                 @foreach($patients as $patient)
-                <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 text-center group hover:shadow-xl transition-all">
-                    <div class="w-16 h-16 rounded-[1.5rem] bg-indigo-50 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                        <span class="text-2xl font-black text-indigo-600">{{ substr($patient->name, 0, 1) }}</span>
+                <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 text-center group hover:shadow-2xl hover:border-emerald-100 transition-all duration-500 relative">
+                    <div class="w-20 h-20 rounded-[2rem] bg-emerald-50 flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform duration-500 relative">
+                        <span class="text-3xl font-black text-emerald-600">{{ substr($patient->name, 0, 1) }}</span>
+                        <div class="absolute -bottom-1 -right-1 w-6 h-6 bg-emerald-500 border-4 border-white rounded-full"></div>
                     </div>
-                    <h4 class="font-black text-slate-800 mb-1">{{ $patient->name }}</h4>
-                    <p class="text-xs font-bold text-slate-400 mb-4">{{ $patient->age }} Years Old</p>
-                    <div class="flex justify-center gap-4 text-[10px] font-black uppercase tracking-widest">
-                        <div class="text-slate-400">Stable</div>
-                        <div class="w-px h-3 bg-slate-100"></div>
-                        <div class="text-emerald-500">Active</div>
+                    <h4 class="font-black text-xl text-slate-800 mb-1 tracking-tight">{{ $patient->name }}</h4>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] mb-6 italic">{{ $patient->email }}</p>
+                    
+                    <div class="flex justify-center items-center gap-6 py-4 bg-slate-50 rounded-2xl border border-slate-100">
+                        <div class="text-center">
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">Age</p>
+                            <p class="text-sm font-black text-slate-700">{{ $patient->age ?? 'N/A' }}</p>
+                        </div>
+                        <div class="w-px h-6 bg-slate-200"></div>
+                        <div class="text-center">
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-tighter">Group</p>
+                            <p class="text-sm font-black text-emerald-600">A+</p>
+                        </div>
                     </div>
                 </div>
                 @endforeach
+            </div>
+
+            <!-- Patients Pagination -->
+            <div class="flex justify-center py-6">
+                {{ $patients->appends(['tab' => 'patients', 'reports_page' => $medicalReports->currentPage()])->links('vendor.pagination.tailwind_custom') }}
             </div>
         </div>
 
         <!-- ========================================== -->
         <!-- TAB 4: DIAGNOSE -->
         <!-- ========================================== -->
-        <div x-show="activeTab === 'diagnose'" x-cloak x-transition>
+        <div x-show="activeTab === 'diagnose'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4">
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
                 <!-- Waiting List -->
                 <div class="lg:col-span-4 bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100">
-                    <h3 class="text-xl font-black text-slate-800 mb-8 tracking-tight">Waiting Room</h3>
-                    <div class="space-y-4">
-                        @foreach($pendingAppointments as $app)
-                        <div class="p-4 bg-slate-50 rounded-2xl border border-slate-100 flex justify-between items-center group cursor-pointer hover:bg-indigo-50 hover:border-indigo-100 transition-all">
-                            <div class="flex items-center gap-3">
-                                <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center font-black text-indigo-600 shadow-sm">{{ substr($app->patient->name, 0, 1) }}</div>
+                    <div class="flex items-center justify-between mb-8">
+                        <h3 class="text-xl font-black text-slate-800 tracking-tight">Waiting Room</h3>
+                        <span class="bg-rose-100 text-rose-600 text-[10px] font-black px-3 py-1 rounded-lg uppercase tracking-widest">{{ $pendingAppointments->count() }} Live</span>
+                    </div>
+                    <div class="space-y-4 custom-scrollbar max-h-[600px] overflow-y-auto pr-2">
+                        @forelse($pendingAppointments as $app)
+                        <div class="p-5 bg-slate-50 rounded-3xl border border-slate-100 flex justify-between items-center group cursor-pointer hover:bg-emerald-50 hover:border-emerald-100 transition-all">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-2xl bg-white flex items-center justify-center font-black text-emerald-600 shadow-sm group-hover:scale-110 transition-transform">{{ substr($app->patient->name, 0, 1) }}</div>
                                 <div>
-                                    <p class="text-sm font-black text-slate-800">{{ $app->patient->name }}</p>
-                                    <p class="text-[10px] font-bold text-slate-400 uppercase">{{ $app->service->name }}</p>
+                                    <p class="text-sm font-black text-slate-800 group-hover:text-emerald-700 transition-colors">{{ $app->patient->name }}</p>
+                                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest">{{ $app->service->name }}</p>
                                 </div>
                             </div>
-                            <svg class="w-4 h-4 text-slate-300 group-hover:text-indigo-600 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            <div class="flex flex-col items-end">
+                                <span class="text-[10px] font-black text-emerald-600">{{ Carbon\Carbon::parse($app->appointment_date)->format('H:i') }}</span>
+                                <svg class="w-4 h-4 text-slate-300 group-hover:text-emerald-600 transition-colors mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                            </div>
                         </div>
-                        @endforeach
+                        @empty
+                        <div class="text-center py-10">
+                            <p class="text-xs font-black text-slate-300 uppercase italic">No pending visits</p>
+                        </div>
+                        @endforelse
                     </div>
                 </div>
 
                 <!-- Diagnosis Form -->
-                <div class="lg:col-span-8 bg-white p-10 rounded-[2.5rem] shadow-sm border border-slate-100">
-                    <h3 class="text-2xl font-black text-slate-800 mb-10 tracking-tight">Patient Diagnosis</h3>
-                    <form action="#" class="space-y-8">
-                        <div class="grid grid-cols-2 gap-6">
-                            <div class="space-y-2">
-                                <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Select Patient</label>
-                                <select class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700">
-                                    <option>Select from waiting list...</option>
-                                    @foreach($pendingAppointments as $app)
-                                        <option value="{{ $app->id }}">{{ $app->patient->name }}</option>
-                                    @endforeach
-                                </select>
+                <div class="lg:col-span-8 bg-white p-12 rounded-[3rem] shadow-sm border border-slate-100">
+                    <div class="mb-10">
+                        <h3 class="text-3xl font-black text-slate-800 tracking-tight">Active Consultation</h3>
+                        <p class="text-sm text-slate-400 font-bold uppercase tracking-widest mt-2">Document symptoms and provide prescriptions</p>
+                    </div>
+                    
+                    <form action="#" class="space-y-10">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="space-y-3">
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Selected Patient</label>
+                                <div class="relative">
+                                    <select class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 px-6 font-black text-slate-700 transition-all outline-none appearance-none">
+                                        <option>Choose from list...</option>
+                                        @foreach($pendingAppointments as $app)
+                                            <option value="{{ $app->id }}">{{ $app->patient->name }} ({{ $app->service->name }})</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="space-y-2">
-                                <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Category</label>
-                                <select class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700">
-                                    <option>Chronic Condition</option>
-                                    <option>Acute Illness</option>
-                                    <option>Routine Checkup</option>
-                                </select>
+                            <div class="space-y-3">
+                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Visit Category</label>
+                                <div class="relative">
+                                    <select class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 px-6 font-black text-slate-700 transition-all outline-none appearance-none">
+                                        <option>General Diagnosis</option>
+                                        <option>Emergency Care</option>
+                                        <option>Post-Surgical Followup</option>
+                                        <option>Chronic Management</option>
+                                    </select>
+                                    <div class="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"></path></svg>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="space-y-2">
-                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Medical Notes (Symptoms & Observation)</label>
-                            <textarea rows="4" class="w-full bg-slate-50 border-none rounded-3xl p-6 font-bold text-slate-700 placeholder-slate-300" placeholder="Type symptoms here..."></textarea>
+
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Symptoms & Clinical Observations</label>
+                            <textarea rows="6" class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-[2rem] p-8 font-black text-slate-700 placeholder-slate-300 transition-all outline-none" placeholder="Enter detailed patient symptoms..."></textarea>
                         </div>
-                        <div class="space-y-2">
-                            <label class="text-xs font-black text-slate-400 uppercase tracking-widest">Prescription</label>
-                            <input type="text" class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700 placeholder-slate-300" placeholder="Medication, Dosage, Frequency">
+
+                        <div class="space-y-3">
+                            <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ml-2">Prescription & Advice</label>
+                            <div class="relative">
+                                <span class="absolute left-6 top-5 text-emerald-600">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                                </span>
+                                <input type="text" class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 pl-14 pr-6 font-black text-slate-700 placeholder-slate-300 transition-all outline-none" placeholder="Medication, Dosage, Period">
+                            </div>
                         </div>
-                        <button type="submit" class="w-full bg-emerald-600 text-white py-5 rounded-[2rem] font-black shadow-xl shadow-emerald-100 hover:scale-[1.02] active:scale-[0.98] transition-all">Save Diagnosis & Complete Visit</button>
+
+                        <button type="submit" class="w-full bg-emerald-600 text-white py-6 rounded-[2.5rem] font-black shadow-2xl shadow-emerald-100 hover:scale-[1.01] active:scale-[0.99] transition-all flex items-center justify-center gap-3 uppercase tracking-[0.2em] text-xs">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+                            Save & Close Consultation
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
+
+        <!-- Medical Report Detail Modal -->
+        <div x-show="showReportModal" 
+             class="fixed inset-0 z-[110] flex items-center justify-center p-6 bg-slate-900/60 backdrop-blur-sm"
+             x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0"
+             x-transition:enter-end="opacity-100"
+             x-cloak>
+            <div @click.away="showReportModal = false" 
+                 class="bg-white w-full max-w-2xl rounded-[3rem] shadow-2xl overflow-hidden border border-slate-100"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="scale-90 opacity-0 translate-y-10"
+                 x-transition:enter-end="scale-100 opacity-100 translate-y-0">
+                
+                <div class="p-10 border-b border-slate-50 bg-emerald-50/30 flex justify-between items-start">
+                    <div>
+                        <span class="px-4 py-1.5 bg-emerald-600 text-white text-[10px] font-black uppercase tracking-widest rounded-full mb-4 inline-block shadow-lg shadow-emerald-200">Official Record</span>
+                        <h2 class="text-4xl font-black text-slate-800 tracking-tighter" x-text="'Report #' + selectedReport?.id"></h2>
+                    </div>
+                    <button @click="showReportModal = false" class="p-3 bg-white text-slate-400 hover:text-rose-600 rounded-2xl shadow-sm transition-colors focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    </button>
+                </div>
+
+                <div class="p-12 space-y-10">
+                    <div class="grid grid-cols-2 gap-12">
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 italic">Patient Name</p>
+                            <p class="text-xl font-black text-slate-800" x-text="selectedReport?.patient"></p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 italic">Exam Date</p>
+                            <p class="text-xl font-black text-slate-800" x-text="selectedReport?.date"></p>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-50 p-8 rounded-3xl border border-slate-100">
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-4 italic">Diagnostic Conclusion</p>
+                        <p class="text-lg font-bold text-slate-600 italic leading-relaxed" x-text="selectedReport?.content || 'All vitals are normal and within established parameters. No immediate clinical intervention required.'"></p>
+                    </div>
+
+                    <div class="flex gap-4">
+                        <button @click="triggerDownload(selectedReport.download_url); showReportModal = false" class="flex-1 bg-slate-900 text-white py-5 rounded-2xl font-black text-sm hover:scale-[1.02] active:scale-95 transition-all shadow-xl shadow-slate-200 flex items-center justify-center gap-3">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+                            Download PDF
+                        </button>
+                        <button class="px-8 py-5 border-2 border-slate-100 text-slate-400 font-black text-sm rounded-2xl hover:bg-slate-50 transition-all">Print</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <!-- Modals -->
@@ -297,7 +472,7 @@
                 <input type="hidden" name="password_confirmation" value="password">
                 <div class="flex justify-end gap-4 mt-10">
                     <button type="button" x-on:click="$dispatch('close')" class="px-8 py-4 bg-slate-100 text-slate-400 font-black rounded-2xl">Cancel</button>
-                    <button type="submit" class="px-8 py-4 bg-indigo-600 text-white font-black rounded-2xl shadow-xl shadow-indigo-100">Register Patient</button>
+                    <button type="submit" class="px-8 py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100">Register Patient</button>
                 </div>
             </form>
         </div>
@@ -315,7 +490,7 @@
                     labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
                     datasets: [{
                         data: [12000, 19000, 15000, 25000, 22000, 30000, 28000, 35000],
-                        backgroundColor: (context) => context.dataIndex === 5 ? '#4f46e5' : '#e0e7ff',
+                        backgroundColor: (context) => context.dataIndex === 5 ? '#10b981' : '#ecfdf5',
                         borderRadius: 12,
                         barThickness: 32,
                     }]
@@ -335,7 +510,7 @@
                 data: {
                     datasets: [{
                         data: [30, 40, 20],
-                        backgroundColor: ['#4f46e5', '#60a5fa', '#34d399'],
+                        backgroundColor: ['#10b981', '#34d399', '#059669'],
                         borderWidth: 0,
                         cutout: '80%',
                         borderRadius: 20,
@@ -345,5 +520,10 @@
             });
         });
     </script>
-    <style>[x-cloak] { display: none !important; }</style>
+    <style>
+        [x-cloak] { display: none !important; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #10b98120; border-radius: 10px; }
+    </style>
 </x-app-layout>

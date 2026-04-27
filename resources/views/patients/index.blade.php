@@ -38,7 +38,7 @@
         <!-- Top Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-10">
             <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 flex items-center gap-6">
-                <div class="w-16 h-16 bg-indigo-50 rounded-2xl flex items-center justify-center text-indigo-600">
+                <div class="w-16 h-16 bg-emerald-50 rounded-2xl flex items-center justify-center text-emerald-600">
                     <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
                 </div>
                 <div>
@@ -71,10 +71,10 @@
             <div class="p-8 border-b border-slate-50 flex flex-col md:flex-row justify-between items-center gap-6">
                 <div class="relative w-full md:w-96">
                     <input type="text" x-model="searchQuery" @input.debounce.300ms="searchPatients()" placeholder="Search patient by name or phone..." 
-                           class="w-full pl-12 pr-4 py-3 bg-slate-50 border-none rounded-2xl focus:ring-4 focus:ring-indigo-100 transition-all font-bold text-slate-700">
+                           class="w-full pl-12 pr-4 py-3 bg-slate-50 border-none rounded-2xl focus:ring-4 focus:ring-emerald-100 transition-all font-bold text-slate-700">
                     <svg class="w-5 h-5 absolute left-4 top-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
                 </div>
-                <button @click="showAddModal = true" class="w-full md:w-auto px-8 py-4 bg-indigo-600 text-white font-black rounded-2xl shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition-all flex items-center justify-center gap-2">
+                <button @click="showAddModal = true" class="w-full md:w-auto px-8 py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100 hover:bg-indigo-700 transition-all flex items-center justify-center gap-2">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                     Add New Patient
                 </button>
@@ -97,7 +97,7 @@
                                 <td class="px-8 py-6 text-sm font-bold text-slate-400">P-<span x-text="p.id.toString().padStart(3, '0')"></span></td>
                                 <td class="px-8 py-6">
                                     <div class="flex items-center gap-4 cursor-pointer" @click="openDetails(p)">
-                                        <div class="w-10 h-10 rounded-xl bg-indigo-50 flex items-center justify-center text-indigo-600 font-black shadow-sm group-hover:scale-110 transition-transform">
+                                        <div class="w-10 h-10 rounded-xl bg-emerald-50 flex items-center justify-center text-emerald-600 font-black shadow-sm group-hover:scale-110 transition-transform">
                                             <span x-text="p.name.charAt(0)"></span>
                                         </div>
                                         <div>
@@ -116,12 +116,12 @@
                                     <span :class="{
                                         'bg-emerald-50 text-emerald-600 border-emerald-100': p.status === 'Stable',
                                         'bg-amber-50 text-amber-600 border-amber-100': p.status === 'Under Treatment',
-                                        'bg-blue-50 text-blue-600 border-blue-100': p.status === 'Recovered'
+                                        'bg-blue-50 text-emerald-600 border-blue-100': p.status === 'Recovered'
                                     }" class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border" x-text="p.status"></span>
                                 </td>
                                 <td class="px-8 py-6 text-end">
                                     <div class="flex justify-end gap-2">
-                                        <button @click="openDetails(p)" class="p-2.5 bg-slate-50 text-slate-400 hover:bg-indigo-600 hover:text-white rounded-xl transition-all">
+                                        <button @click="openDetails(p)" class="p-2.5 bg-slate-50 text-slate-400 hover:bg-emerald-600 hover:text-white rounded-xl transition-all">
                                             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                         </button>
                                         <button @click="openEdit(p)" class="p-2.5 bg-slate-50 text-slate-400 hover:bg-amber-500 hover:text-white rounded-xl transition-all">
@@ -151,7 +151,7 @@
             <div @click.away="showDetailsModal = false" class="bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl p-10 text-center">
                 <template x-if="selectedPatient">
                     <div>
-                        <div class="w-24 h-24 rounded-[2.5rem] bg-indigo-50 flex items-center justify-center text-indigo-600 text-4xl font-black mx-auto mb-6 shadow-md border-4 border-white">
+                        <div class="w-24 h-24 rounded-[2.5rem] bg-emerald-50 flex items-center justify-center text-emerald-600 text-4xl font-black mx-auto mb-6 shadow-md border-4 border-white">
                             <span x-text="selectedPatient.name.charAt(0)"></span>
                         </div>
                         <h3 class="text-2xl font-black text-slate-800 mb-1" x-text="selectedPatient.name"></h3>
@@ -169,7 +169,7 @@
                         </div>
 
                         <div class="flex flex-col gap-3">
-                            <button @click="openEdit()" class="w-full py-4 bg-indigo-600 text-white font-black rounded-2xl shadow-xl shadow-indigo-100 flex items-center justify-center gap-2">
+                            <button @click="openEdit()" class="w-full py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100 flex items-center justify-center gap-2">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-5M16.123 3.897a2.25 2.25 0 113.182 3.182L12 14.25l-3.5 1 1-3.5 7.623-7.623z"></path></svg>
                                 Edit Patient Info
                             </button>
@@ -242,7 +242,7 @@
                     </div>
                     <div class="flex justify-end gap-4 mt-10">
                         <button type="button" @click="showAddModal = false; showEditModal = false" class="px-8 py-4 bg-slate-100 text-slate-400 font-black rounded-2xl">Cancel</button>
-                        <button type="submit" class="px-8 py-4 bg-indigo-600 text-white font-black rounded-2xl shadow-xl shadow-indigo-100" x-text="showEditModal ? 'Save Changes' : 'Register Patient'"></button>
+                        <button type="submit" class="px-8 py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100" x-text="showEditModal ? 'Save Changes' : 'Register Patient'"></button>
                     </div>
                 </form>
             </div>

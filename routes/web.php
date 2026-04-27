@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/book-appointment', [\App\Http\Controllers\PatientAppointmentController::class, 'store'])->name('patient.book.store');
 
     Route::post('/dashboard/complete-diagnosis/{appointment}', [DashboardController::class, 'completeDiagnosis'])->name('dashboard.complete-diagnosis');
+    Route::get('/medical-reports/{report}/download', [DashboardController::class, 'downloadReport'])->name('medical-reports.download');
 });
 
 require __DIR__.'/auth.php';

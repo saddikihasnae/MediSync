@@ -30,7 +30,7 @@
                 <p class="text-sm text-slate-400 font-bold uppercase tracking-widest mt-1">Management Console</p>
             </div>
             
-            <button @click="openAdd()" class="w-full md:w-auto px-8 py-4 bg-indigo-600 text-white font-black rounded-2xl shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition-all flex items-center justify-center gap-2">
+            <button @click="openAdd()" class="w-full md:w-auto px-8 py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100 hover:bg-indigo-700 transition-all flex items-center justify-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                 {{ __('messages.add_service') }}
             </button>
@@ -48,21 +48,21 @@
             @forelse($services as $service)
             <div class="bg-white p-8 rounded-[2.5rem] shadow-sm border border-slate-100 relative group hover:shadow-xl transition-all duration-500 overflow-hidden">
                 <!-- Decorative Icon Background -->
-                <div class="absolute -right-4 -top-4 w-24 h-24 bg-indigo-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700"></div>
+                <div class="absolute -right-4 -top-4 w-24 h-24 bg-emerald-50 rounded-full opacity-50 group-hover:scale-150 transition-transform duration-700"></div>
                 
                 <div class="relative z-10 h-full flex flex-col">
                     <div class="flex justify-between items-start mb-6">
                         <div class="flex items-center gap-4">
-                            <div class="w-14 h-14 bg-indigo-600 rounded-2xl shadow-lg shadow-indigo-100 flex items-center justify-center text-white shrink-0">
+                            <div class="w-14 h-14 bg-emerald-600 rounded-2xl shadow-lg shadow-emerald-100 flex items-center justify-center text-white shrink-0">
                                 <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
                             </div>
                             <div>
                                 <h3 class="text-xl font-black text-slate-800 leading-tight">{{ $service->name }}</h3>
-                                <p class="text-xs font-black text-indigo-600 uppercase tracking-widest mt-0.5">{{ $service->duration_minutes }} Min</p>
+                                <p class="text-xs font-black text-emerald-600 uppercase tracking-widest mt-0.5">{{ $service->duration_minutes }} Min</p>
                             </div>
                         </div>
                         <div class="flex gap-1">
-                            <button @click="openEdit(@js($service))" class="p-2 text-slate-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-all">
+                            <button @click="openEdit(@js($service))" class="p-2 text-slate-400 hover:text-emerald-600 hover:bg-emerald-50 rounded-xl transition-all">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-5M16.123 3.897a2.25 2.25 0 113.182 3.182L12 14.25l-3.5 1 1-3.5 7.623-7.623z"></path></svg>
                             </button>
                             <button @click="openDelete(@js($service))" class="p-2 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition-all">
@@ -76,8 +76,8 @@
                     </div>
 
                     <div class="flex items-center justify-between border-t border-slate-50 pt-6 mt-auto">
-                        <div class="bg-indigo-50 px-4 py-2 rounded-xl border border-indigo-100 flex items-center gap-2">
-                            <svg class="w-4 h-4 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <div class="bg-emerald-50 px-4 py-2 rounded-xl border border-emerald-100 flex items-center gap-2">
+                            <svg class="w-4 h-4 text-emerald-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             <span class="text-[10px] font-black text-indigo-700 uppercase tracking-tighter">Active</span>
                         </div>
                         <div class="text-end">
@@ -106,12 +106,12 @@
                     
                     <div class="space-y-2">
                         <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.service_name') }}</label>
-                        <input type="text" name="name" x-model="selectedService.name" required class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700 focus:ring-2 focus:ring-indigo-100">
+                        <input type="text" name="name" x-model="selectedService.name" required class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700 focus:ring-2 focus:ring-emerald-100">
                     </div>
 
                     <div class="space-y-2">
                         <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.description') }}</label>
-                        <textarea name="description" x-model="selectedService.description" rows="3" class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700 focus:ring-2 focus:ring-indigo-100"></textarea>
+                        <textarea name="description" x-model="selectedService.description" rows="3" class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700 focus:ring-2 focus:ring-emerald-100"></textarea>
                     </div>
 
                     <div class="grid grid-cols-2 gap-6">
@@ -127,7 +127,7 @@
 
                     <div class="flex justify-end gap-4 mt-10">
                         <button type="button" @click="showServiceModal = false" class="px-8 py-4 bg-slate-100 text-slate-400 font-black rounded-2xl transition-all">{{ __('messages.cancel') }}</button>
-                        <button type="submit" class="px-8 py-4 bg-indigo-600 text-white font-black rounded-2xl shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition-all" x-text="isEdit ? '{{ __('messages.save') }}' : '{{ __('messages.save') }}'"></button>
+                        <button type="submit" class="px-8 py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100 hover:bg-indigo-700 transition-all" x-text="isEdit ? '{{ __('messages.save') }}' : '{{ __('messages.save') }}'"></button>
                     </div>
                 </form>
             </div>

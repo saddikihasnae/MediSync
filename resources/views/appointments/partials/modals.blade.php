@@ -22,7 +22,7 @@
 <x-modal name="edit-modal-{{ $appointment->id }}" focusable>
     <div class="p-8 text-start">
         <h2 class="text-xl font-bold text-slate-800 mb-6 flex items-center gap-2">
-            <span class="p-2 bg-blue-100 text-blue-600 rounded-lg">
+            <span class="p-2 bg-blue-100 text-emerald-600 rounded-lg">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-5M16.123 3.897a2.25 2.25 0 113.182 3.182L12 14.25l-3.5 1 1-3.5 7.623-7.623z"></path></svg>
             </span>
             تعديل الموعد
@@ -70,7 +70,7 @@
             </div>
             <div class="mt-8 flex justify-end gap-3">
                 <x-secondary-button x-on:click="$dispatch('close')" class="rounded-xl">{{ __('messages.cancel') }}</x-secondary-button>
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl font-bold shadow-lg shadow-blue-100 transition-all duration-200">
+                <button type="submit" class="bg-emerald-600 hover:bg-blue-700 text-white px-6 py-2 rounded-xl font-bold shadow-lg shadow-blue-100 transition-all duration-200">
                     تحديث البيانات
                 </button>
             </div>

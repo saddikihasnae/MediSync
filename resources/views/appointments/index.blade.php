@@ -23,11 +23,11 @@
         <div class="px-8 py-6 flex flex-col md:flex-row justify-between items-center gap-6 mb-8">
             <div class="relative w-full md:w-96">
                 <input type="text" x-model="searchQuery" @input.debounce.300ms="searchAppointments()" placeholder="{{ __('messages.search_patient') }}" 
-                       class="w-full pl-12 pr-4 py-3 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-4 focus:ring-indigo-50 focus:border-indigo-500 transition-all font-bold">
+                       class="w-full pl-12 pr-4 py-3 bg-white border border-slate-100 rounded-2xl shadow-sm focus:ring-4 focus:ring-emerald-50 focus:border-emerald-500 transition-all font-bold">
                 <svg class="w-5 h-5 absolute left-4 top-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
             </div>
             
-            <button @click="showAddModal = true" class="w-full md:w-auto px-8 py-4 bg-indigo-600 text-white font-black rounded-2xl shadow-xl shadow-indigo-100 hover:bg-indigo-700 transition-all flex items-center justify-center gap-2">
+            <button @click="showAddModal = true" class="w-full md:w-auto px-8 py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100 hover:bg-indigo-700 transition-all flex items-center justify-center gap-2">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
                 {{ __('messages.new_appointment') }}
             </button>
@@ -71,7 +71,7 @@
                                     <template x-if="new Date(app.appointment_date).getHours() == {{ $hour }}">
                                         <div @click="selectedApp = app; showDetailsModal = true" 
                                              :class="{
-                                                 'bg-indigo-600 text-white shadow-indigo-100': app.service.name.includes('Surgery') || app.service.name.includes('Cardiology'),
+                                                 'bg-emerald-600 text-white shadow-emerald-100': app.service.name.includes('Surgery') || app.service.name.includes('Cardiology'),
                                                  'bg-emerald-50 text-emerald-700 border border-emerald-100': app.service.name.includes('Consultation') || app.service.name.includes('Pediatrics'),
                                                  'bg-amber-50 text-amber-700 border border-amber-100': app.service.name.includes('Dental') || app.service.name.includes('Radiology')
                                              }"
@@ -103,7 +103,7 @@
                     @csrf
                     <div class="space-y-2">
                         <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.patient') }}</label>
-                        <select name="patient_id" required class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700 focus:ring-2 focus:ring-indigo-100">
+                        <select name="patient_id" required class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700 focus:ring-2 focus:ring-emerald-100">
                             @foreach($patients as $p)
                                 <option value="{{ $p->id }}">{{ $p->name }}</option>
                             @endforeach
@@ -111,7 +111,7 @@
                     </div>
                     <div class="space-y-2">
                         <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.service') }}</label>
-                        <select name="service_id" required class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700 focus:ring-2 focus:ring-indigo-100">
+                        <select name="service_id" required class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700 focus:ring-2 focus:ring-emerald-100">
                             @foreach($services as $s)
                                 <option value="{{ $s->id }}">{{ $s->name }}</option>
                             @endforeach
@@ -119,11 +119,11 @@
                     </div>
                     <div class="space-y-2">
                         <label class="text-xs font-black text-slate-400 uppercase tracking-widest">{{ __('messages.date_time') }}</label>
-                        <input type="datetime-local" name="appointment_date" required class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700 focus:ring-2 focus:ring-indigo-100">
+                        <input type="datetime-local" name="appointment_date" required class="w-full bg-slate-50 border-none rounded-2xl p-4 font-bold text-slate-700 focus:ring-2 focus:ring-emerald-100">
                     </div>
                     <div class="flex justify-end gap-4 mt-10">
                         <button type="button" @click="showAddModal = false" class="px-8 py-4 bg-slate-100 text-slate-400 font-black rounded-2xl">{{ __('messages.cancel') }}</button>
-                        <button type="submit" class="px-8 py-4 bg-indigo-600 text-white font-black rounded-2xl shadow-xl shadow-indigo-100">{{ __('messages.save') }}</button>
+                        <button type="submit" class="px-8 py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100">{{ __('messages.save') }}</button>
                     </div>
                 </form>
             </div>
@@ -170,7 +170,7 @@
                         </div>
                         <div class="flex justify-end gap-4 mt-10">
                             <button type="button" @click="showEditModal = false" class="px-8 py-4 bg-slate-100 text-slate-400 font-black rounded-2xl">{{ __('messages.cancel') }}</button>
-                            <button type="submit" class="px-8 py-4 bg-indigo-600 text-white font-black rounded-2xl shadow-xl shadow-indigo-100">{{ __('messages.save') }}</button>
+                            <button type="submit" class="px-8 py-4 bg-emerald-600 text-white font-black rounded-2xl shadow-xl shadow-emerald-100">{{ __('messages.save') }}</button>
                         </div>
                     </form>
                 </template>
@@ -184,13 +184,13 @@
             <div @click.away="showDetailsModal = false" class="bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl p-10 text-center">
                 <template x-if="selectedApp">
                     <div>
-                        <div class="w-20 h-20 rounded-[2rem] bg-indigo-50 border-4 border-white shadow-md flex items-center justify-center mx-auto mb-6">
-                            <span class="text-3xl font-black text-indigo-600" x-text="selectedApp.patient.name.charAt(0)"></span>
+                        <div class="w-20 h-20 rounded-[2rem] bg-emerald-50 border-4 border-white shadow-md flex items-center justify-center mx-auto mb-6">
+                            <span class="text-3xl font-black text-emerald-600" x-text="selectedApp.patient.name.charAt(0)"></span>
                         </div>
                         <h3 class="text-2xl font-black text-slate-800 mb-1" x-text="selectedApp.patient.name"></h3>
                         <p class="text-sm font-bold text-slate-400 uppercase tracking-widest mb-8" x-text="selectedApp.service.name"></p>
                         <div class="flex justify-center gap-4">
-                            <button @click="openEdit()" class="p-4 bg-slate-100 text-indigo-600 rounded-2xl hover:bg-indigo-600 hover:text-white transition-all shadow-sm">
+                            <button @click="openEdit()" class="p-4 bg-slate-100 text-emerald-600 rounded-2xl hover:bg-emerald-600 hover:text-white transition-all shadow-sm">
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-5M16.123 3.897a2.25 2.25 0 113.182 3.182L12 14.25l-3.5 1 1-3.5 7.623-7.623z"></path></svg>
                             </button>
                             <button @click="showDeleteConfirm = true; showDetailsModal = false" class="p-4 bg-rose-50 text-rose-600 rounded-2xl hover:bg-rose-600 hover:text-white transition-all shadow-sm">

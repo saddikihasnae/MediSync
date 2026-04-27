@@ -31,5 +31,8 @@ class DatabaseSeeder extends Seeder
 
         // 20 Appointments
         Appointment::factory(20)->create();
+
+        // 20 Medical Reports
+        \App\Models\MedicalReport::factory(20)->create();
     }
 }

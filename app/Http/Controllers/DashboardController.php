@@ -11,18 +11,18 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $user = auth()->user();
 
         if ($user->role === 'doctor') {
-            return $this->doctorDashboard();
+            return $this->doctorDashboard($request);
         }
 
         return $this->patientDashboard();
     }
 
-    protected function doctorDashboard()
+    protected function doctorDashboard(Request $request)
     {
         $today = Carbon::today();
         
@@ -47,8 +47,21 @@ class DashboardController extends Controller
             ->take(4)
             ->get();
 
-        $medicalReports = MedicalReport::with('patient')->latest()->take(10)->get();
-        $patients = User::where('role', 'patient')->latest()->take(12)->get();
+        // Medical Reports Filtering Logic
+        $reportsQuery = MedicalReport::with('patient')->latest();
+        
+        if ($request->filled('type') && $request->type !== 'all') {
+            $reportsQuery->where('type', $request->type);
+        }
+
+        $medicalReports = $reportsQuery->paginate(5, ['*'], 'reports_page');
+        
+        // Append all parameters to maintain filter and tab state during pagination
+        $medicalReports->appends($request->all());
+
+        $patients = User::where('role', 'patient')->latest()->paginate(8, ['*'], 'patients_page');
+        $patients->appends($request->all());
+
         $pendingAppointments = Appointment::with(['patient', 'service'])
             ->where('status', 'pending')
             ->orderBy('appointment_date', 'asc')
@@ -117,5 +130,22 @@ class DashboardController extends Controller
         ]);
 
         return redirect()->back()->with('success', 'Diagnosis saved and appointment completed.');
+    }
+
+    public function downloadReport(MedicalReport $report)
+    {
+        $content = "MediSync Clinic - Medical Report\n";
+        $content .= "--------------------------------\n";
+        $content .= "Report ID: " . $report->report_id . "\n";
+        $content .= "Patient: " . $report->patient->name . "\n";
+        $content .= "Type: " . $report->type . "\n";
+        $content .= "Date: " . $report->report_date->format('d M, Y') . "\n\n";
+        $content .= "Summary:\n" . $report->result_summary . "\n";
+
+        $fileName = "Report_" . $report->report_id . ".txt";
+
+        return response()->streamDownload(function () use ($content) {
+            echo $content;
+        }, $fileName);
     }
 }

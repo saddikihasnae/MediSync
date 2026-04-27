@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('medical_reports', function (Blueprint $table) {
             $table->id();
+            $table->string('report_id')->unique(); // e.g., REP-1042
             $table->foreignId('patient_id')->constrained('users')->onDelete('cascade');
-            $table->string('type'); // Blood Analysis, X-Ray, Prescription
-            $table->text('content')->nullable();
-            $table->string('file_path')->nullable();
+            $table->string('type'); // Blood Test, X-Ray Scan, etc.
+            $table->date('report_date');
+            $table->text('result_summary')->nullable();
             $table->timestamps();
         });
     }
