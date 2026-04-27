@@ -23,8 +23,23 @@ class DatabaseSeeder extends Seeder
             'role' => 'doctor',
         ]);
 
-        // 10 Patients
-        User::factory(10)->create(['role' => 'patient']);
+        // 2 Specific Patients for Testing
+        User::factory()->create([
+            'name' => 'Sarah Johnson',
+            'email' => 'patient1@medisync.com',
+            'password' => Hash::make('password'),
+            'role' => 'patient',
+        ]);
+
+        User::factory()->create([
+            'name' => 'Michael Smith',
+            'email' => 'patient2@medisync.com',
+            'password' => Hash::make('password'),
+            'role' => 'patient',
+        ]);
+
+        // 8 Random Patients
+        User::factory(8)->create(['role' => 'patient']);
 
         // 6 Services
         Service::factory(6)->create();

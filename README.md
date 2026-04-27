@@ -1,58 +1,75 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# 🏥 MediSync - Clinic Management System
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 1. Project Overview
+**MediSync** is a modern, fast, and comprehensive management system designed specifically for medical and dental clinics. Built with a focus on usability and performance, it provides a seamless experience for managing appointments, patient records, medical services, and diagnostic reports all in one centralized platform.
 
-## About Laravel
+## 2. Key Features
+*   🔐 **Authentication & Roles:** Secure login system with distinct dashboards and permissions for Doctors (Admins) and Patients.
+*   🎨 **Modern UI with Floating Sidebar:** A premium, responsive user interface featuring a sleek floating sidebar, ensuring optimal navigation on any device.
+*   🌍 **Fully Multilingual (i18n):** Complete translation support for **English**, **French**, and **Arabic**, including automatic **RTL (Right-to-Left)** layout adaptation for Arabic users.
+*   🌙 **Global Dark Mode:** A sophisticated, eye-friendly dark mode implemented using Alpine.js and Tailwind CSS, persisting across all pages via local storage.
+*   💬 **Interactive Modals & Toast Notifications:** Smooth popup modals for CRUD operations and live, non-intrusive toast alerts for user feedback.
+*   ⚡ **Dynamic Data & Filtering:** Intelligent, dynamic dropdowns for filtering medical reports and managing clinic services effortlessly.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 3. Tech Stack
+*   **Backend:** Laravel (PHP)
+*   **Frontend Styling:** Tailwind CSS
+*   **Frontend Logic:** Alpine.js
+*   **Database:** MySQL
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 4. Installation Guide
+Please follow these step-by-step instructions to set up the project locally.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
+**Step 1:** Clone the repository
 ```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+git clone https://github.com/saddikihasnae/MediSync.git
+cd MediSync_App
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+**Step 2:** Install PHP dependencies
+```bash
+composer install
+```
 
-## Contributing
+**Step 3:** Install NPM dependencies and compile assets
+```bash
+npm install
+npm run build
+```
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+**Step 4:** Configure the environment
+```bash
+cp .env.example .env
+```
+*(Make sure to update the `.env` file with your local MySQL database credentials: `DB_DATABASE`, `DB_USERNAME`, `DB_PASSWORD`)*
 
-## Code of Conduct
+**Step 5:** Generate the application key
+```bash
+php artisan key:generate
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+**Step 6:** Run migrations and seeders
+```bash
+php artisan migrate:fresh --seed
+```
+> **Note:** This command will automatically generate all necessary database tables and populate the system with dummy data (dummy clinic services, appointments, medical reports, and test users).
 
-## Security Vulnerabilities
+**Step 7:** Link the storage (For profile pictures and medical reports)
+```bash
+php artisan storage:link
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+**Step 8:** Run the local development server
+```bash
+php artisan serve
+```
+*(You can now access the application at `http://localhost:8000`)*
 
-## License
+## 5. Default Credentials
+Use the following credentials to immediately log in and test the system without needing to register new accounts.
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+| Role | Name | Email Address | Password |
+| :--- | :--- | :--- | :--- |
+| **Doctor (Admin)** | Dr. Ahmed Ali | `doctor@medisync.com` | `password` |
+| **Patient 1** | Sarah Johnson | `patient1@medisync.com` | `password` |
+| **Patient 2** | Michael Smith | `patient2@medisync.com` | `password` |
