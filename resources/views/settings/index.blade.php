@@ -37,7 +37,7 @@
                         
                         <div class="flex items-center gap-8 mb-10 pb-10 border-b border-slate-50">
                             <div class="relative group">
-                                <div class="w-24 h-24 bg-emerald-100 rounded-[2.5rem] flex items-center justify-center text-3xl font-black text-emerald-600 shadow-inner overflow-hidden">
+                                <div class="w-24 h-24 bg-emerald-100 dark:bg-slate-800 rounded-[2.5rem] flex items-center justify-center text-3xl font-black text-emerald-600 dark:text-emerald-400 shadow-inner overflow-hidden border-4 border-white dark:border-slate-800">
                                     @if(auth()->user()->avatar)
                                         <img src="{{ asset('storage/' . auth()->user()->avatar) }}" class="w-full h-full object-cover">
                                     @else
@@ -51,7 +51,7 @@
                             </div>
                             <div>
                                 <h3 class="text-xl font-black text-slate-800 dark:text-white">{{ __('messages.profile_picture') }}</h3>
-                                <p class="text-sm text-slate-400 font-bold mb-2">PNG, JPG or GIF. Max 2MB.</p>
+                                <p class="text-sm text-slate-400 dark:text-slate-500 font-bold mb-2">PNG, JPG or GIF. Max 2MB.</p>
                                 <button type="button" @click="document.getElementById('avatar_input').click()" class="px-6 py-2 bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 font-black text-xs rounded-xl hover:bg-emerald-50 dark:hover:bg-emerald-900/20 hover:text-emerald-600 transition-all">{{ __('messages.upload_new') }}</button>
                             </div>
                         </div>
@@ -59,8 +59,8 @@
                         <div class="space-y-8">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div class="space-y-3">
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ms-2">{{ __('messages.full_name') }}</label>
-                                    <input type="text" name="name" value="{{ old('name', auth()->user()->name) }}" class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 px-6 font-black text-slate-700 transition-all outline-none">
+                                    <label class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ms-2">{{ __('messages.full_name') }}</label>
+                                    <input type="text" name="name" value="{{ old('name', auth()->user()->name) }}" class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-900 rounded-2xl py-4 px-6 font-black text-slate-700 dark:text-slate-200 transition-all outline-none">
                                     @error('name') <p class="text-xs text-rose-500 font-bold mt-1">{{ $message }}</p> @enderror
                                 </div>
                                 <div class="space-y-3">
@@ -77,7 +77,7 @@
                             </div>
                             @endif
                             <div class="pt-4">
-                                <button type="submit" class="bg-emerald-600 text-white px-10 py-4 rounded-2xl font-black text-sm shadow-xl shadow-emerald-100 hover:scale-[1.02] active:scale-95 transition-all">{{ __('messages.save_changes') }}</button>
+                                <button type="submit" class="bg-emerald-600 text-white px-10 py-4 rounded-2xl font-black text-sm shadow-xl shadow-emerald-100 dark:shadow-none hover:scale-[1.02] active:scale-95 transition-all">{{ __('messages.save_changes') }}</button>
                             </div>
                         </div>
                     </form>
@@ -94,17 +94,17 @@
                         <div class="space-y-8">
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div class="space-y-3">
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ms-2">{{ __('messages.clinic_name') }}</label>
-                                    <input type="text" name="clinic_name" value="{{ $clinicSettings['clinic_name'] ?? '' }}" class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 px-6 font-black text-slate-700 transition-all outline-none">
+                                    <label class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ms-2">{{ __('messages.clinic_name') }}</label>
+                                    <input type="text" name="clinic_name" value="{{ $clinicSettings['clinic_name'] ?? '' }}" class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-900 rounded-2xl py-4 px-6 font-black text-slate-700 dark:text-slate-200 transition-all outline-none">
                                 </div>
                                 <div class="space-y-3">
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ms-2">{{ __('messages.contact_number') }}</label>
-                                    <input type="text" name="clinic_phone" value="{{ $clinicSettings['clinic_phone'] ?? '' }}" class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 px-6 font-black text-slate-700 transition-all outline-none">
+                                    <label class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ms-2">{{ __('messages.contact_number') }}</label>
+                                    <input type="text" name="clinic_phone" value="{{ $clinicSettings['clinic_phone'] ?? '' }}" class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-900 rounded-2xl py-4 px-6 font-black text-slate-700 dark:text-slate-200 transition-all outline-none">
                                 </div>
                             </div>
                             <div class="space-y-3">
-                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ms-2">{{ __('messages.clinic_address') }}</label>
-                                <input type="text" name="clinic_address" value="{{ $clinicSettings['clinic_address'] ?? '' }}" class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 px-6 font-black text-slate-700 transition-all outline-none">
+                                <label class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ms-2">{{ __('messages.clinic_address') }}</label>
+                                <input type="text" name="clinic_address" value="{{ $clinicSettings['clinic_address'] ?? '' }}" class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-900 rounded-2xl py-4 px-6 font-black text-slate-700 dark:text-slate-200 transition-all outline-none">
                             </div>
                             <div class="space-y-3">
                                 <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ms-2">{{ __('messages.working_hours') }}</label>
@@ -120,7 +120,7 @@
                                 </div>
                             </div>
                             <div class="pt-4">
-                                <button type="submit" class="bg-emerald-600 text-white px-10 py-4 rounded-2xl font-black text-sm shadow-xl shadow-emerald-100 hover:scale-[1.02] active:scale-95 transition-all">{{ __('messages.update_clinic_info') }}</button>
+                                <button type="submit" class="bg-emerald-600 text-white px-10 py-4 rounded-2xl font-black text-sm shadow-xl shadow-emerald-100 dark:shadow-none hover:scale-[1.02] active:scale-95 transition-all">{{ __('messages.update_clinic_info') }}</button>
                             </div>
                         </div>
                     </form>
@@ -130,7 +130,7 @@
 
             <!-- Security -->
             <div x-show="activeTab === 'security'" x-cloak x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-4">
-                <div class="bg-white rounded-[2.5rem] shadow-sm border border-slate-100 p-10">
+                <div class="bg-white dark:bg-slate-900 rounded-[2.5rem] shadow-sm border border-slate-100 dark:border-slate-800 p-10">
                     <div class="mb-10">
                         <h3 class="text-xl font-black text-slate-800 dark:text-white">{{ __('messages.security') }}</h3>
                         <p class="text-sm text-slate-400 dark:text-slate-500 font-bold">{{ __('messages.update_password') }}</p>
@@ -140,23 +140,23 @@
                         @method('PATCH')
                         <div class="space-y-8">
                             <div class="space-y-3">
-                                <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ms-2">{{ __('messages.current_password') }}</label>
-                                <input type="password" name="current_password" class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 px-6 font-black text-slate-700 transition-all outline-none">
+                                <label class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ms-2">{{ __('messages.current_password') }}</label>
+                                <input type="password" name="current_password" class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-900 rounded-2xl py-4 px-6 font-black text-slate-700 dark:text-slate-200 transition-all outline-none">
                                 @error('current_password') <p class="text-xs text-rose-500 font-bold mt-1">{{ $message }}</p> @enderror
                             </div>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <div class="space-y-3">
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ms-2">{{ __('messages.new_password') }}</label>
-                                    <input type="password" name="password" class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 px-6 font-black text-slate-700 transition-all outline-none">
+                                    <label class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ms-2">{{ __('messages.new_password') }}</label>
+                                    <input type="password" name="password" class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-900 rounded-2xl py-4 px-6 font-black text-slate-700 dark:text-slate-200 transition-all outline-none">
                                     @error('password') <p class="text-xs text-rose-500 font-bold mt-1">{{ $message }}</p> @enderror
                                 </div>
                                 <div class="space-y-3">
-                                    <label class="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em] ms-2">{{ __('messages.confirm_new_password') }}</label>
-                                    <input type="password" name="password_confirmation" class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 px-6 font-black text-slate-700 transition-all outline-none">
+                                    <label class="text-[10px] font-black text-slate-400 dark:text-slate-500 uppercase tracking-[0.2em] ms-2">{{ __('messages.confirm_new_password') }}</label>
+                                    <input type="password" name="password_confirmation" class="w-full bg-slate-50 dark:bg-slate-800 border-2 border-transparent focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-900 rounded-2xl py-4 px-6 font-black text-slate-700 dark:text-slate-200 transition-all outline-none">
                                 </div>
                             </div>
                             <div class="pt-4">
-                                <button type="submit" class="bg-slate-900 text-white px-10 py-4 rounded-2xl font-black text-sm shadow-xl shadow-slate-200 hover:scale-[1.02] active:scale-95 transition-all">{{ __('messages.update_password') }}</button>
+                                <button type="submit" class="bg-slate-900 dark:bg-emerald-600 text-white px-10 py-4 rounded-2xl font-black text-sm shadow-xl shadow-slate-200 dark:shadow-none hover:scale-[1.02] active:scale-95 transition-all">{{ __('messages.update_password') }}</button>
                             </div>
                         </div>
                     </form>
@@ -182,7 +182,7 @@
                                         </div>
                                     @endif
                                 </a>
-                                <a href="{{ route('lang.switch', 'fr') }}" class="flex items-center justify-between p-4 rounded-2xl border-2 {{ app()->getLocale() == 'fr' ? 'border-emerald-500 bg-emerald-50 text-emerald-600' : 'border-slate-50 bg-slate-50 text-slate-400' }} font-black text-sm transition-all">
+                                <a href="{{ route('lang.switch', 'fr') }}" class="flex items-center justify-between p-4 rounded-2xl border-2 {{ app()->getLocale() == 'fr' ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600' : 'border-slate-50 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 text-slate-400' }} font-black text-sm transition-all">
                                     Français
                                     @if(app()->getLocale() == 'fr')
                                         <div class="w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center">
@@ -190,7 +190,7 @@
                                         </div>
                                     @endif
                                 </a>
-                                <a href="{{ route('lang.switch', 'ar') }}" class="flex items-center justify-between p-4 rounded-2xl border-2 {{ app()->getLocale() == 'ar' ? 'border-emerald-500 bg-emerald-50 text-emerald-600' : 'border-slate-50 bg-slate-50 text-slate-400' }} font-black text-sm transition-all">
+                                <a href="{{ route('lang.switch', 'ar') }}" class="flex items-center justify-between p-4 rounded-2xl border-2 {{ app()->getLocale() == 'ar' ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20 text-emerald-600' : 'border-slate-50 dark:border-slate-800 bg-slate-50 dark:bg-slate-800 text-slate-400' }} font-black text-sm transition-all">
                                     العربية
                                     @if(app()->getLocale() == 'ar')
                                         <div class="w-4 h-4 bg-emerald-500 rounded-full flex items-center justify-center">
@@ -209,10 +209,11 @@
                             </div>
                             <div class="relative inline-block w-16 h-8 align-middle select-none transition duration-200 ease-in">
                                 <input type="checkbox" name="toggle" id="toggle" 
-                                       class="toggle-checkbox absolute block w-8 h-8 rounded-full bg-white dark:bg-slate-200 border-4 border-slate-200 dark:border-slate-700 appearance-none cursor-pointer outline-none transition-all duration-300 checked:translate-x-8 checked:border-emerald-500"
+                                       class="toggle-checkbox absolute block w-8 h-8 rounded-full bg-white dark:bg-slate-200 border-4 appearance-none cursor-pointer outline-none transition-all duration-300"
+                                       :class="$store.theme.dark ? 'translate-x-8 border-emerald-500' : 'border-slate-200 dark:border-slate-700'"
                                        :checked="$store.theme.dark"
                                        @click="$store.theme.toggle()"/>
-                                <label for="toggle" class="toggle-label block overflow-hidden h-8 rounded-full bg-slate-100 dark:bg-slate-800 cursor-pointer transition-all duration-300" :class="$store.theme.dark ? 'bg-emerald-500' : 'bg-slate-100 dark:bg-slate-800'"></label>
+                                <label for="toggle" class="toggle-label block overflow-hidden h-8 rounded-full cursor-pointer transition-all duration-300" :class="$store.theme.dark ? 'bg-emerald-500' : 'bg-slate-100 dark:bg-slate-800'"></label>
                             </div>
                         </div>
                     </div>

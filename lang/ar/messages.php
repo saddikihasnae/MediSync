@@ -199,4 +199,7 @@ return [
     'yes_cancel_session' => 'نعم، إلغاء الجلسة',
     'cancel_session_confirm' => 'إلغاء الموعد؟',
     'cancel_session_text' => 'هل أنت متأكد أنك تريد إلغاء جلسة :service الخاصة بك؟',
+    'welcome' => 'مرحباً بك مجدداً! يرجى تسجيل الدخول إلى حسابك.',
+    'no_account' => 'ليس لديك حساب؟',
+    'create_account' => 'أنشئ ملفك الشخصي كمريض',
 ];

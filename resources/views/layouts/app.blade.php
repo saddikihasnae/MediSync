@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" 
       dir="{{ in_array(app()->getLocale(), ['ar']) ? 'rtl' : 'ltr' }}"
+      x-data
       :class="{ 'dark': $store.theme.dark }">
     <head>
         <meta charset="utf-8">
@@ -9,6 +10,15 @@
 
         <title>{{ config('app.name', 'Laravel') }}</title>
 
+        <!-- Pre-check dark mode to avoid flash -->
+        <script>
+            if (localStorage.getItem('dark') === 'true') {
+                document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+            }
+        </script>
+
         <script>
             document.addEventListener('alpine:init', () => {
                 Alpine.store('theme', {
@@ -16,6 +26,11 @@
                     toggle() {
                         this.dark = !this.dark;
                         localStorage.setItem('dark', this.dark);
+                        if (this.dark) {
+                            document.documentElement.classList.add('dark');
+                        } else {
+                            document.documentElement.classList.remove('dark');
+                        }
                     }
                 })
             })

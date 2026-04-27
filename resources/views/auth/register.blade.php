@@ -14,9 +14,9 @@
         </div>
 
         <!-- الجانب الأيمن: نموذج التسجيل الممركز -->
-        <div class="flex flex-col justify-center bg-white p-8 md:p-16 relative overflow-y-auto">
+        <div class="flex flex-col justify-center bg-white dark:bg-slate-950 p-8 md:p-16 relative overflow-y-auto transition-colors duration-300">
             
-            <div class="absolute top-8 right-8 flex items-center bg-slate-50 p-1 rounded-2xl border border-slate-100">
+            <div class="absolute top-8 right-8 flex items-center bg-slate-50 dark:bg-slate-900 p-1 rounded-2xl border border-slate-100 dark:border-slate-800">
                 <a href="{{ route('lang.switch', 'ar') }}" class="px-5 py-2 text-[10px] font-black rounded-xl transition-all {{ app()->getLocale() == 'ar' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' : 'text-slate-400 hover:text-emerald-600' }}">AR</a>
                 <a href="{{ route('lang.switch', 'fr') }}" class="px-5 py-2 text-[10px] font-black rounded-xl transition-all {{ app()->getLocale() == 'fr' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' : 'text-slate-400 hover:text-emerald-600' }}">FR</a>
                 <a href="{{ route('lang.switch', 'en') }}" class="px-5 py-2 text-[10px] font-black rounded-xl transition-all {{ app()->getLocale() == 'en' ? 'bg-emerald-600 text-white shadow-lg shadow-emerald-100' : 'text-slate-400 hover:text-emerald-600' }}">EN</a>
@@ -24,8 +24,8 @@
 
             <div class="max-w-md w-full mx-auto py-12">
                 <div class="mb-10">
-                    <h2 class="text-4xl font-black text-slate-800 mb-3 tracking-tight">{{ __('messages.register') }}</h2>
-                    <p class="text-sm font-bold text-slate-400 uppercase tracking-widest">{{ __('messages.create_account') ?? 'Create your patient profile' }}</p>
+                    <h2 class="text-4xl font-black text-slate-800 dark:text-white mb-3 tracking-tight">{{ __('messages.register') }}</h2>
+                    <p class="text-sm font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">{{ __('messages.create_account') ?? 'Create your patient profile' }}</p>
                 </div>
 
                 <form method="POST" action="{{ route('register') }}" class="space-y-4">
@@ -33,41 +33,41 @@
 
                     <!-- Name -->
                     <div class="space-y-2">
-                        <label for="name" class="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">{{ __('messages.name') }}</label>
-                        <input id="name" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 px-5 transition-all outline-none font-bold text-slate-700 shadow-sm shadow-slate-100">
+                        <label for="name" class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest ml-1">{{ __('messages.name') }}</label>
+                        <input id="name" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" class="w-full bg-slate-50 dark:bg-slate-900 border-2 border-transparent focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-800 rounded-2xl py-4 px-5 transition-all outline-none font-bold text-slate-700 dark:text-slate-200 shadow-sm shadow-slate-100 dark:shadow-none">
                         <x-input-error :messages="$errors->get('name')" class="mt-2" />
                     </div>
 
                     <!-- Email -->
                     <div class="space-y-2">
-                        <label for="email" class="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">{{ __('messages.email') }}</label>
-                        <input id="email" type="email" name="email" :value="old('email')" required autocomplete="username" class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 px-5 transition-all outline-none font-bold text-slate-700 shadow-sm shadow-slate-100">
+                        <label for="email" class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest ml-1">{{ __('messages.email') }}</label>
+                        <input id="email" type="email" name="email" :value="old('email')" required autocomplete="username" class="w-full bg-slate-50 dark:bg-slate-900 border-2 border-transparent focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-800 rounded-2xl py-4 px-5 transition-all outline-none font-bold text-slate-700 dark:text-slate-200 shadow-sm shadow-slate-100 dark:shadow-none">
                         <x-input-error :messages="$errors->get('email')" class="mt-2" />
                     </div>
 
                     <!-- Password -->
                     <div class="space-y-2">
-                        <label for="password" class="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">{{ __('messages.password') }}</label>
-                        <input id="password" type="password" name="password" required autocomplete="new-password" class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 px-5 transition-all outline-none font-bold text-slate-700 shadow-sm shadow-slate-100">
+                        <label for="password" class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest ml-1">{{ __('messages.password') }}</label>
+                        <input id="password" type="password" name="password" required autocomplete="new-password" class="w-full bg-slate-50 dark:bg-slate-900 border-2 border-transparent focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-800 rounded-2xl py-4 px-5 transition-all outline-none font-bold text-slate-700 dark:text-slate-200 shadow-sm shadow-slate-100 dark:shadow-none">
                         <x-input-error :messages="$errors->get('password')" class="mt-2" />
                     </div>
 
                     <!-- Confirm Password -->
                     <div class="space-y-2">
-                        <label for="password_confirmation" class="text-xs font-black text-slate-400 uppercase tracking-widest ml-1">{{ __('messages.confirm_password') }}</label>
-                        <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" class="w-full bg-slate-50 border-2 border-transparent focus:border-emerald-500 focus:bg-white rounded-2xl py-4 px-5 transition-all outline-none font-bold text-slate-700 shadow-sm shadow-slate-100">
+                        <label for="password_confirmation" class="text-xs font-black text-slate-400 dark:text-slate-500 uppercase tracking-widest ml-1">{{ __('messages.confirm_password') }}</label>
+                        <input id="password_confirmation" type="password" name="password_confirmation" required autocomplete="new-password" class="w-full bg-slate-50 dark:bg-slate-900 border-2 border-transparent focus:border-emerald-500 focus:bg-white dark:focus:bg-slate-800 rounded-2xl py-4 px-5 transition-all outline-none font-bold text-slate-700 dark:text-slate-200 shadow-sm shadow-slate-100 dark:shadow-none">
                         <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
                     </div>
 
                     <div class="pt-4">
-                        <button type="submit" class="w-full py-5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-2xl shadow-xl shadow-emerald-100 transition-all transform active:scale-[0.98] uppercase tracking-[0.2em] text-xs">
+                        <button type="submit" class="w-full py-5 bg-emerald-600 hover:bg-emerald-700 text-white font-black rounded-2xl shadow-xl shadow-emerald-100 dark:shadow-none transition-all transform active:scale-[0.98] uppercase tracking-[0.2em] text-xs">
                             {{ __('messages.register') }}
                         </button>
                     </div>
 
-                    <div class="text-center pt-6 border-t border-slate-50">
-                        <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">
-                            {{ __('messages.already_registered') ?? 'Already have an account?' }} 
+                    <div class="text-center pt-6 border-t border-slate-50 dark:border-slate-900">
+                        <p class="text-xs font-bold text-slate-400 dark:text-slate-500 uppercase tracking-widest">
+                            {{ __('messages.already_registered') }} 
                             <a href="{{ route('login') }}" class="text-emerald-600 font-black ml-2 hover:underline tracking-normal">{{ __('messages.login') }}</a>
                         </p>
                     </div>

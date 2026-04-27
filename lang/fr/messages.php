@@ -199,4 +199,7 @@ return [
     'yes_cancel_session' => 'Oui, annuler la séance',
     'cancel_session_confirm' => 'Annuler le rendez-vous ?',
     'cancel_session_text' => 'Êtes-vous sûr de vouloir annuler votre séance de :service ?',
+    'welcome' => 'Bon retour ! Veuillez vous connecter à votre compte.',
+    'no_account' => 'Vous n\'avez pas de compte ?',
+    'create_account' => 'Créez votre profil patient',
 ];

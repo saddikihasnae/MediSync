@@ -199,4 +199,7 @@ return [
     'yes_cancel_session' => 'Yes, Cancel Session',
     'cancel_session_confirm' => 'Cancel Appointment?',
     'cancel_session_text' => 'Are you sure you want to cancel your :service session?',
+    'welcome' => 'Welcome back! Please login to your account.',
+    'no_account' => 'Don\'t have an account?',
+    'create_account' => 'Create your patient profile',
 ];
