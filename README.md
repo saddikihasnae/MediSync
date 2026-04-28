@@ -59,11 +59,18 @@ php artisan migrate:fresh --seed
 php artisan storage:link
 ```
 
+
 **Step 8:** Run the local development server
-```bash
+Open your terminal and run the Laravel server:
+
+
 php artisan serve
-```
-*(You can now access the application at `http://localhost:8000`)*
+**Step 9:** Compile frontend assets (Vite)
+Open a second (new) terminal window in the same project directory and run the following command to compile Tailwind CSS and Alpine.js:
+
+
+npm run dev
+(You can now access the application in your browser at http://localhost:8000)
 
 ## 5. Default Credentials
 Use the following credentials to immediately log in and test the system without needing to register new accounts.
